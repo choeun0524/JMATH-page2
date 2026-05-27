@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수강생 후기 — J-MATH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --navy:       #0B2D5C;
+      --navy-deep:  #061A36;
+      --navy-mid:   #0e3369;
+      --gold:       #C9A23A;
+      --gold-light: #E6C66A;
+      --gold-pale:  rgba(201,162,58,.12);
+      --white:      #FFFFFF;
+      --bg-blue:    #F5F7FB;
+      --bg-cream:   #FBF8EF;
+      --text:       #182033;
+      --text-sub:   #667085;
+      --border:     rgba(11,45,92,.10);
+      --border-gold:rgba(201,162,58,.30);
+      --shadow-sm:  0 2px 12px rgba(11,45,92,.08);
+      --shadow-md:  0 8px 32px rgba(11,45,92,.12);
+      --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Noto Sans KR',sans-serif; color:var(--text); background:var(--bg-blue); min-height:100vh; word-break:keep-all; overflow-wrap:break-word; }
+
+    /* ── HEADER ── */
+    .page-header {
+      background:rgba(6,26,54,.97);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(201,162,58,.15);
+      height:70px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 6%;
+      position:sticky; top:0; z-index:100;
+    }
+    .btn-back {
+      display:inline-flex; align-items:center; gap:8px;
+      color:rgba(255,255,255,.65);
+      font-size:14px; font-weight:600;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
+      padding:8px 18px; border-radius:var(--r-sm);
+      cursor:pointer; font-family:inherit;
+      transition:all .2s;
+    }
+    .btn-back:hover { background:rgba(255,255,255,.1); color:#fff; border-color:rgba(255,255,255,.2); }
+    .btn-back i { font-size:12px; }
+    .header-logo { font-size:18px; font-weight:900; color:var(--gold-light); letter-spacing:-.4px; }
+    .header-right { width:110px; }
+
+    /* ── HERO ── */
+    .page-hero {
+      background:linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+      padding:60px 6% 52px; text-align:center;
+      position:relative; overflow:hidden;
+    }
+    .page-hero::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(-48deg, transparent 0, transparent 80px, rgba(201,162,58,.025) 80px, rgba(201,162,58,.025) 81px);
+    }
+    .page-hero::after {
+      content:''; position:absolute;
+      top:-80px; left:50%; transform:translateX(-50%);
+      width:600px; height:400px;
+      background:radial-gradient(ellipse, rgba(201,162,58,.08) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    .page-kicker {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:11.5px; font-weight:700; color:var(--gold-light);
+      letter-spacing:1.5px; text-transform:uppercase; margin-bottom:14px;
+      position:relative; z-index:1;
+    }
+    .page-kicker::before, .page-kicker::after {
+      content:''; display:block; width:22px; height:1.5px;
+      background:var(--gold-light); opacity:.5;
+    }
+    .page-title { font-size:34px; font-weight:900; color:#fff; letter-spacing:-1px; line-height:1.2; position:relative; z-index:1; }
+    .page-title em { font-style:normal; color:var(--gold-light); }
+    .page-desc { font-size:14px; color:rgba(255,255,255,.42); margin-top:12px; line-height:1.8; position:relative; z-index:1; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      background:var(--white); border-bottom:1px solid var(--border);
+      padding:20px 6%; display:flex; justify-content:center; gap:60px;
+    }
+    .strip-stat { text-align:center; }
+    .strip-val { font-size:22px; font-weight:900; color:var(--navy); letter-spacing:-.5px; }
+    .strip-lbl { font-size:12px; color:var(--text-sub); margin-top:2px; }
+
+    /* ── FILTER TABS ── */
+    .filter-bar {
+      background:var(--white);
+      border-bottom:1px solid var(--border);
+      padding:0 6%;
+      position:sticky; top:70px; z-index:90;
+    }
+    .filter-tabs {
+      display:flex; gap:0;
+      max-width:1100px; margin:0 auto;
+      overflow-x:auto;
+    }
+    .filter-tabs::-webkit-scrollbar { display:none; }
+    .filter-tab {
+      display:inline-flex; align-items:center; gap:7px;
+      padding:16px 22px;
+      font-size:13.5px; font-weight:600;
+      color:var(--text-sub);
+      background:transparent; border:none;
+      border-bottom:2.5px solid transparent;
+      cursor:pointer; font-family:inherit;
+      white-space:nowrap;
+      transition:all .2s;
+    }
+    .filter-tab i { font-size:12px; }
+    .filter-tab:hover { color:var(--navy); }
+    .filter-tab.active {
+      color:var(--navy);
+      border-bottom-color:var(--gold);
+      font-weight:800;
+    }
+    .filter-tab.active i { color:var(--gold); }
+
+    /* section show/hide */
+    .review-section { display:block; }
+    .review-section + .review-section { margin-top:60px; padding-top:60px; border-top:1px solid var(--border); }
+    .review-section.hidden { display:none; }
+    .review-section.hidden + .review-section { border-top:none; padding-top:0; margin-top:0; }
+
+    /* ── CONTENT ── */
+    .page-body { max-width:1100px; margin:0 auto; padding:52px 6% 80px; }
+
+    /* section header */
+    .sec-label {
+      display:flex; align-items:center; gap:14px;
+      margin-bottom:28px;
+    }
+    .sec-label-icon {
+      width:40px; height:40px;
+      background:linear-gradient(135deg, var(--navy), var(--navy-mid));
+      border-radius:var(--r-sm);
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0;
+    }
+    .sec-label-icon i { font-size:16px; color:var(--gold-light); }
+    .sec-label-text h2 { font-size:20px; font-weight:800; color:var(--navy); letter-spacing:-.4px; }
+    .sec-label-text p { font-size:13px; color:var(--text-sub); margin-top:2px; }
+    .sec-divider { height:1px; background:var(--border); margin:48px 0; }
+
+    /* ── TEXT REVIEWS ── */
+    .reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .review-card {
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); padding:26px;
+      position:relative; overflow:hidden; transition:all .3s;
+      box-shadow:var(--shadow-sm);
+    }
+    .review-card::before {
+      content:'\201C'; position:absolute; top:-10px; left:16px;
+      font-size:76px; color:var(--gold); opacity:.1;
+      font-family:Georgia,serif; line-height:1;
+    }
+    .review-card:hover { border-color:var(--border-gold); box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .r-grade {
+      display:inline-flex; align-items:center; gap:5px;
+      background:var(--gold-pale); border:1px solid var(--border-gold);
+      color:var(--gold); font-size:11px; font-weight:700;
+      padding:3px 10px; border-radius:30px; margin-bottom:10px;
+    }
+    .r-grade i { font-size:9px; }
+    .r-stars { color:#E6A800; font-size:12px; letter-spacing:3px; margin-bottom:10px; }
+    .r-text { font-size:13.5px; color:var(--text); line-height:1.8; margin-bottom:18px; }
+    .r-author { display:flex; align-items:center; gap:10px; }
+    .r-avatar {
+      width:34px; height:34px;
+      background:linear-gradient(135deg, var(--navy), var(--navy-mid));
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+    }
+    .r-avatar i { font-size:13px; color:var(--gold-light); }
+    .r-author-name { font-size:13px; font-weight:700; color:var(--navy); }
+    .r-author-meta { font-size:11px; color:var(--text-sub); }
+
+    /* ── VIDEO THUMBNAILS ── */
+    .video-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .video-card {
+      border-radius:var(--r-lg); overflow:hidden;
+      box-shadow:var(--shadow-sm); transition:all .3s;
+      background:var(--white); border:1.5px solid var(--border);
+      cursor:pointer;
+    }
+    .video-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:var(--border-gold); }
+    .video-thumb {
+      height:172px;
+      background:linear-gradient(135deg, var(--navy) 0%, #1a3a6e 100%);
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .video-thumb::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(-48deg, transparent 0, transparent 40px, rgba(201,162,58,.04) 40px, rgba(201,162,58,.04) 41px);
+    }
+    .video-thumb .thumb-placeholder {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:8px;
+    }
+    .video-thumb .thumb-placeholder span {
+      font-size:11px; color:rgba(255,255,255,.35); letter-spacing:.5px;
+    }
+    .video-thumb .thumb-placeholder i.fa-image { font-size:28px; color:rgba(255,255,255,.15); }
+    .play-btn {
+      width:52px; height:52px;
+      background:rgba(201,162,58,.9);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 4px 20px rgba(0,0,0,.35);
+      position:relative; z-index:1;
+      transition:all .2s;
+    }
+    .video-card:hover .play-btn { background:var(--gold-light); transform:scale(1.08); }
+    .play-btn i { font-size:18px; color:var(--navy-deep); margin-left:3px; }
+    .video-duration {
+      position:absolute; bottom:10px; right:12px;
+      background:rgba(0,0,0,.7); color:#fff;
+      font-size:11px; font-weight:600;
+      padding:2px 7px; border-radius:4px;
+    }
+    .video-info { padding:16px 18px; }
+    .video-title { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:5px; line-height:1.45; }
+    .video-meta { font-size:12px; color:var(--text-sub); }
+
+    /* ── GRADE CARDS ── */
+    .grade-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+    .grade-card {
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); padding:24px 20px;
+      text-align:center; transition:all .3s;
+      box-shadow:var(--shadow-sm); position:relative; overflow:hidden;
+    }
+    .grade-card::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg, var(--gold), var(--gold-light));
+      transform:scaleX(0); transition:transform .3s; transform-origin:left;
+    }
+    .grade-card:hover { border-color:var(--border-gold); box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .grade-card:hover::after { transform:scaleX(1); }
+    .gc-subject { font-size:11px; font-weight:700; color:var(--text-sub); letter-spacing:.5px; text-transform:uppercase; margin-bottom:14px; }
+    .gc-arrows {
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      margin-bottom:12px;
+    }
+    .gc-before, .gc-after {
+      display:flex; flex-direction:column; align-items:center; gap:3px;
+    }
+    .gc-grade {
+      width:44px; height:44px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; font-weight:900;
+    }
+    .gc-grade.before { background:#f0f0f0; color:#999; }
+    .gc-grade.after  { background:linear-gradient(135deg, var(--gold), var(--gold-light)); color:var(--navy-deep); }
+    .gc-grade-lbl { font-size:10px; color:var(--text-sub); }
+    .gc-arrow-icon { color:var(--gold); font-size:16px; margin-top:-10px; }
+    .gc-period { font-size:11px; color:var(--text-sub); margin-bottom:6px; }
+    .gc-name { font-size:13px; font-weight:700; color:var(--navy); }
+
+    /* ── ADMIT CARDS ── */
+    .admit-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .admit-card {
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); padding:28px;
+      transition:all .3s; box-shadow:var(--shadow-sm);
+      display:flex; align-items:flex-start; gap:16px;
+    }
+    .admit-card:hover { border-color:var(--border-gold); box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .admit-badge {
+      width:52px; height:52px; flex-shrink:0;
+      background:linear-gradient(135deg, var(--navy), var(--navy-mid));
+      border-radius:var(--r-md);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .admit-badge i { font-size:20px; color:var(--gold-light); }
+    .admit-univ { font-size:15px; font-weight:800; color:var(--navy); margin-bottom:4px; }
+    .admit-dept  { font-size:13px; color:var(--text-sub); margin-bottom:10px; }
+    .admit-tag {
+      display:inline-block;
+      background:var(--gold-pale); border:1px solid var(--border-gold);
+      color:var(--gold); font-size:11px; font-weight:700;
+      padding:3px 10px; border-radius:30px;
+    }
+
+    /* ── BLOG CARDS ── */
+    .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .blog-card {
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); overflow:hidden;
+      transition:all .3s; box-shadow:var(--shadow-sm); cursor:pointer;
+    }
+    .blog-card:hover { border-color:var(--border-gold); box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .blog-thumb {
+      height:140px;
+      background:linear-gradient(135deg, var(--bg-blue) 0%, var(--bg-cream) 100%);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:8px;
+      border-bottom:1px solid var(--border); position:relative;
+    }
+    .blog-platform {
+      position:absolute; top:12px; left:14px;
+      background:var(--navy); color:#fff;
+      font-size:10px; font-weight:700; padding:3px 9px;
+      border-radius:4px; letter-spacing:.3px;
+    }
+    .blog-thumb i { font-size:30px; color:rgba(11,45,92,.15); }
+    .blog-thumb span { font-size:11px; color:var(--text-sub); }
+    .blog-body { padding:18px; }
+    .blog-title { font-size:14px; font-weight:700; color:var(--navy); line-height:1.5; margin-bottom:8px; }
+    .blog-preview { font-size:12.5px; color:var(--text-sub); line-height:1.7; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .blog-footer { display:flex; align-items:center; justify-content:space-between; margin-top:14px; padding-top:12px; border-top:1px solid var(--border); }
+    .blog-date { font-size:11px; color:var(--text-sub); }
+    .blog-link { font-size:11px; font-weight:700; color:var(--gold); }
+
+    /* ── KAKAO CARDS ── */
+    .kakao-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .kakao-card {
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); overflow:hidden;
+      box-shadow:var(--shadow-sm); transition:all .3s;
+    }
+    .kakao-card:hover { border-color:var(--border-gold); box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .kakao-header {
+      background:#FEE500;
+      padding:10px 16px;
+      display:flex; align-items:center; gap:8px;
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    .kakao-header i { font-size:16px; color:#3A1D1D; }
+    .kakao-header span { font-size:12px; font-weight:700; color:#3A1D1D; }
+    .kakao-body { padding:18px; display:flex; flex-direction:column; gap:10px; }
+    /* chat bubbles */
+    .kk-row { display:flex; align-items:flex-end; gap:6px; }
+    .kk-row.me { flex-direction:row-reverse; }
+    .kk-avatar {
+      width:28px; height:28px; border-radius:50%; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:12px; font-weight:800; color:#fff;
+    }
+    .kk-avatar.teacher { background:linear-gradient(135deg, var(--navy), var(--navy-mid)); }
+    .kk-avatar.student { background:#bbb; }
+    .kk-bubble {
+      max-width:75%; padding:9px 13px;
+      font-size:12.5px; line-height:1.6; border-radius:var(--r-md);
+    }
+    .kk-row.them .kk-bubble { background:#fff; border:1px solid #e8e8e8; color:var(--text); border-top-left-radius:4px; }
+    .kk-row.me  .kk-bubble  { background:#FEE500; color:#1a1a1a; border-top-right-radius:4px; }
+    .kk-time { font-size:10px; color:#aaa; margin-bottom:2px; flex-shrink:0; }
+    .kakao-caption { padding:0 18px 16px; font-size:11px; color:var(--text-sub); }
+    .kakao-placeholder {
+      height:160px;
+      background:var(--bg-blue);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:8px;
+    }
+    .kakao-placeholder i { font-size:28px; color:rgba(11,45,92,.15); }
+    .kakao-placeholder span { font-size:11.5px; color:var(--text-sub); }
+
+    /* reveal */
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .5s ease, transform .5s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      background:#040e1c; border-top:1px solid rgba(201,162,58,.1);
+      padding:28px 6%; text-align:center;
+    }
+    .page-footer-logo { font-size:16px; font-weight:900; color:var(--gold-light); margin-bottom:6px; }
+    .page-footer-copy { font-size:11px; color:rgba(255,255,255,.15); }
+
+    /* responsive */
+    @media (max-width:960px) {
+      .reviews-grid, .video-grid, .admit-grid, .blog-grid, .kakao-grid { grid-template-columns:repeat(2,1fr); }
+      .grade-grid { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:580px) {
+      .reviews-grid, .video-grid, .grade-grid, .admit-grid, .blog-grid, .kakao-grid { grid-template-columns:1fr; }
+      .page-title { font-size:26px; }
+      .stats-strip { flex-wrap:wrap; gap:24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="page-header">
+  <button class="btn-back" onclick="history.back()">
+    <i class="fas fa-arrow-left"></i> 돌아가기
+  </button>
+  <div class="header-logo">J-MATH</div>
+  <div class="header-right"></div>
+</header>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-kicker">수강생 후기</div>
+  <h1 class="page-title">직접 경험한 학생들의 <em>이야기</em></h1>
+  <p class="page-desc">J-MATH와 함께 성적을 바꾼 학생들의 생생한 후기입니다.</p>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="strip-stat">
+    <div class="strip-val">5,000명+</div>
+    <div class="strip-lbl">누적 수강생</div>
+  </div>
+  <div class="strip-stat">
+    <div class="strip-val">4.97</div>
+    <div class="strip-lbl">평균 만족도 (5점 만점)</div>
+  </div>
+  <div class="strip-stat">
+    <div class="strip-val">89%</div>
+    <div class="strip-lbl">목표 등급 달성률</div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all"><i class="fas fa-th"></i> 전체</button>
+    <button class="filter-tab" data-filter="video"><i class="fas fa-play"></i> 영상 후기</button>
+    <button class="filter-tab" data-filter="grade"><i class="fas fa-chart-line"></i> 성적 사례</button>
+    <button class="filter-tab" data-filter="admit"><i class="fas fa-university"></i> 합격 사례</button>
+    <button class="filter-tab" data-filter="blog"><i class="fas fa-pen-nib"></i> 블로그 후기</button>
+    <button class="filter-tab" data-filter="kakao"><i class="fas fa-comment"></i> 카톡 피드백</button>
+    <button class="filter-tab" data-filter="text"><i class="fas fa-star"></i> 수강생 후기</button>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- ── 1. 학생 인터뷰 영상 ── -->
+  <div class="review-section" data-section="video">
+  <div class="sec-label reveal">
+    <div class="sec-label-icon"><i class="fas fa-play"></i></div>
+    <div class="sec-label-text">
+      <h2>학생 인터뷰 영상</h2>
+      <p>직접 촬영한 수강생 인터뷰 영상입니다</p>
+    </div>
+  </div>
+  <div class="video-grid">
+    <div class="video-card reveal">
+      <div class="video-thumb">
+        <div class="thumb-placeholder">
+          <i class="fas fa-image"></i>
+          <span>영상 썸네일</span>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+        <div class="video-duration">4:23</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">"6개월 만에 4등급에서 1등급 달성한 비결"</div>
+        <div class="video-meta">고3 ○○○ 학생 · 2026.03</div>
+      </div>
+    </div>
+    <div class="video-card reveal">
+      <div class="video-thumb">
+        <div class="thumb-placeholder">
+          <i class="fas fa-image"></i>
+          <span>영상 썸네일</span>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+        <div class="video-duration">3:47</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">"재수 끝에 원하던 대학 합격했어요"</div>
+        <div class="video-meta">재수생 ○○○ 학생 · 2026.02</div>
+      </div>
+    </div>
+    <div class="video-card reveal">
+      <div class="video-thumb">
+        <div class="thumb-placeholder">
+          <i class="fas fa-image"></i>
+          <span>영상 썸네일</span>
+        </div>
+        <div class="play-btn"><i class="fas fa-play"></i></div>
+        <div class="video-duration">5:10</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">"수포자였던 제가 수학이 재미있어졌어요"</div>
+        <div class="video-meta">고2 ○○○ 학생 · 2026.01</div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /video -->
+  <div class="review-section" data-section="grade">
+  <!-- ── 2. 성적 상승 사례 ── -->
+  <div class="sec-label reveal">
+    <div class="sec-label-icon"><i class="fas fa-chart-line"></i></div>
+    <div class="sec-label-text">
+      <h2>성적 상승 사례</h2>
+      <p>실제 수강생의 등급 변화 기록입니다</p>
+    </div>
+  </div>
+  <div class="grade-grid">
+    <div class="grade-card reveal">
+      <div class="gc-subject">수능 수학</div>
+      <div class="gc-arrows">
+        <div class="gc-before">
+          <div class="gc-grade before">4</div>
+          <div class="gc-grade-lbl">수강 전</div>
+        </div>
+        <i class="fas fa-arrow-right gc-arrow-icon"></i>
+        <div class="gc-after">
+          <div class="gc-grade after">1</div>
+          <div class="gc-grade-lbl">수강 후</div>
+        </div>
+      </div>
+      <div class="gc-period">6개월</div>
+      <div class="gc-name">고3 ○○○ 학생</div>
+    </div>
+    <div class="grade-card reveal">
+      <div class="gc-subject">수능 수학</div>
+      <div class="gc-arrows">
+        <div class="gc-before">
+          <div class="gc-grade before">3</div>
+          <div class="gc-grade-lbl">수강 전</div>
+        </div>
+        <i class="fas fa-arrow-right gc-arrow-icon"></i>
+        <div class="gc-after">
+          <div class="gc-grade after">1</div>
+          <div class="gc-grade-lbl">수강 후</div>
+        </div>
+      </div>
+      <div class="gc-period">4개월</div>
+      <div class="gc-name">재수생 ○○○ 학생</div>
+    </div>
+    <div class="grade-card reveal">
+      <div class="gc-subject">모의고사</div>
+      <div class="gc-arrows">
+        <div class="gc-before">
+          <div class="gc-grade before">5</div>
+          <div class="gc-grade-lbl">수강 전</div>
+        </div>
+        <i class="fas fa-arrow-right gc-arrow-icon"></i>
+        <div class="gc-after">
+          <div class="gc-grade after">2</div>
+          <div class="gc-grade-lbl">수강 후</div>
+        </div>
+      </div>
+      <div class="gc-period">8개월</div>
+      <div class="gc-name">고2 ○○○ 학생</div>
+    </div>
+    <div class="grade-card reveal">
+      <div class="gc-subject">내신 수학</div>
+      <div class="gc-arrows">
+        <div class="gc-before">
+          <div class="gc-grade before">4</div>
+          <div class="gc-grade-lbl">수강 전</div>
+        </div>
+        <i class="fas fa-arrow-right gc-arrow-icon"></i>
+        <div class="gc-after">
+          <div class="gc-grade after">1</div>
+          <div class="gc-grade-lbl">수강 후</div>
+        </div>
+      </div>
+      <div class="gc-period">3개월</div>
+      <div class="gc-name">고1 ○○○ 학생</div>
+    </div>
+  </div>
+
+  </div><!-- /grade -->
+  <div class="review-section" data-section="admit">
+  <!-- ── 3. 합격 사례 ── -->
+  <div class="sec-label reveal">
+    <div class="sec-label-icon"><i class="fas fa-university"></i></div>
+    <div class="sec-label-text">
+      <h2>합격 사례</h2>
+      <p>J-MATH와 함께 목표 대학에 합격한 학생들입니다</p>
+    </div>
+  </div>
+  <div class="admit-grid">
+    <div class="admit-card reveal">
+      <div class="admit-badge"><i class="fas fa-graduation-cap"></i></div>
+      <div>
+        <div class="admit-univ">연세대학교</div>
+        <div class="admit-dept">경영학과 (수시)</div>
+        <div class="admit-tag">수학 1등급 달성 후 합격</div>
+      </div>
+    </div>
+    <div class="admit-card reveal">
+      <div class="admit-badge"><i class="fas fa-graduation-cap"></i></div>
+      <div>
+        <div class="admit-univ">고려대학교</div>
+        <div class="admit-dept">이과대학 (정시)</div>
+        <div class="admit-tag">4등급 → 1등급 · 정시 합격</div>
+      </div>
+    </div>
+    <div class="admit-card reveal">
+      <div class="admit-badge"><i class="fas fa-graduation-cap"></i></div>
+      <div>
+        <div class="admit-univ">성균관대학교</div>
+        <div class="admit-dept">소프트웨어학과 (수시)</div>
+        <div class="admit-tag">재수 · 목표 대학 합격</div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /admit -->
+  <div class="review-section" data-section="blog">
+  <!-- ── 4. 블로그 후기 ── -->
+  <div class="sec-label reveal">
+    <div class="sec-label-icon"><i class="fas fa-pen-nib"></i></div>
+    <div class="sec-label-text">
+      <h2>블로그 후기</h2>
+      <p>수강생이 직접 작성한 블로그 후기입니다</p>
+    </div>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card reveal">
+      <div class="blog-thumb">
+        <div class="blog-platform">네이버 블로그</div>
+        <i class="fas fa-file-alt"></i>
+        <span>블로그 이미지</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-title">J-MATH 6개월 수강 후기 — 4등급에서 1등급까지</div>
+        <div class="blog-preview">처음에 반신반의하며 시작했는데 정말 성적이 올랐어요. 선생님의 체계적인 관리 덕분에...</div>
+        <div class="blog-footer">
+          <span class="blog-date">2026.03.15</span>
+          <span class="blog-link">원문 보기 →</span>
+        </div>
+      </div>
+    </div>
+    <div class="blog-card reveal">
+      <div class="blog-thumb">
+        <div class="blog-platform">네이버 블로그</div>
+        <i class="fas fa-file-alt"></i>
+        <span>블로그 이미지</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-title">수포자에서 수학 1등급 달성한 현실 후기</div>
+        <div class="blog-preview">수학을 완전히 포기했었던 제가 1등급을 받을 수 있을 거라고 생각도 못 했어요...</div>
+        <div class="blog-footer">
+          <span class="blog-date">2026.02.20</span>
+          <span class="blog-link">원문 보기 →</span>
+        </div>
+      </div>
+    </div>
+    <div class="blog-card reveal">
+      <div class="blog-thumb">
+        <div class="blog-platform">카카오 브런치</div>
+        <i class="fas fa-file-alt"></i>
+        <span>블로그 이미지</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-title">재수 성공기 — J-MATH와 함께한 1년</div>
+        <div class="blog-preview">재수를 결심하고 J-MATH를 선택한 것이 제 인생 최고의 결정이었습니다. 꼼꼼한 피드백과...</div>
+        <div class="blog-footer">
+          <span class="blog-date">2026.01.08</span>
+          <span class="blog-link">원문 보기 →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /blog -->
+  <div class="review-section" data-section="kakao">
+  <!-- ── 5. 카톡 피드백 캡처 ── -->
+  <div class="sec-label reveal">
+    <div class="sec-label-icon"><i class="fas fa-comment"></i></div>
+    <div class="sec-label-text">
+      <h2>카카오톡 문제 피드백</h2>
+      <p>수업 후 실시간으로 이루어지는 피드백 대화입니다</p>
+    </div>
+  </div>
+  <div class="kakao-grid">
+    <div class="kakao-card reveal">
+      <div class="kakao-header">
+        <i class="fas fa-comment"></i>
+        <span>현정호 선생님</span>
+      </div>
+      <div class="kakao-body">
+        <div class="kk-row me">
+          <div class="kk-bubble">선생님 오늘 배운 미적분 문제 풀다가 막혔어요 ㅠㅠ</div>
+          <div class="kk-time">오후 10:14</div>
+        </div>
+        <div class="kk-row them">
+          <div class="kk-avatar teacher">J</div>
+          <div class="kk-bubble">어떤 부분이요? 사진 찍어서 보내줘요 😊</div>
+          <div class="kk-time">오후 10:15</div>
+        </div>
+        <div class="kk-row me">
+          <div class="kk-bubble">네 지금 보내드릴게요! [사진]</div>
+          <div class="kk-time">오후 10:16</div>
+        </div>
+        <div class="kk-row them">
+          <div class="kk-avatar teacher">J</div>
+          <div class="kk-bubble">여기서 치환 쓰면 돼요. 수업 때 했던 그 패턴이에요 👍</div>
+          <div class="kk-time">오후 10:18</div>
+        </div>
+      </div>
+      <div class="kakao-caption">수업 외 시간에도 즉각적인 피드백을 제공합니다</div>
+    </div>
+
+    <div class="kakao-card reveal">
+      <div class="kakao-header">
+        <i class="fas fa-comment"></i>
+        <span>현정호 선생님</span>
+      </div>
+      <div class="kakao-body">
+        <div class="kk-row them">
+          <div class="kk-avatar teacher">J</div>
+          <div class="kk-bubble">오늘 모의고사 어땠어요? 결과 나오면 알려줘요 😊</div>
+          <div class="kk-time">오후 5:30</div>
+        </div>
+        <div class="kk-row me">
+          <div class="kk-bubble">선생님!! 1등급 나왔어요!!!! 처음으로요 ㅠㅠㅠ</div>
+          <div class="kk-time">오후 6:12</div>
+        </div>
+        <div class="kk-row them">
+          <div class="kk-avatar teacher">J</div>
+          <div class="kk-bubble">정말요?! 대박이다 🎉 고생했어요 진짜로. 이게 실력이에요!</div>
+          <div class="kk-time">오후 6:13</div>
+        </div>
+      </div>
+      <div class="kakao-caption">학생과 함께 기쁨을 나누는 순간들입니다</div>
+    </div>
+
+    <div class="kakao-card reveal">
+      <div class="kakao-header">
+        <i class="fas fa-comment"></i>
+        <span>현정호 선생님</span>
+      </div>
+      <div class="kakao-body">
+        <div class="kk-row them">
+          <div class="kk-avatar teacher">J</div>
+          <div class="kk-bubble">이번 주 학습 리포트예요. 삼각함수 파트 집중 필요해요</div>
+          <div class="kk-time">일요일 오후 8:00</div>
+        </div>
+        <div class="kk-row me">
+          <div class="kk-bubble">넵 감사합니다! 열심히 할게요</div>
+          <div class="kk-time">일요일 오후 8:05</div>
+        </div>
+        <div class="kk-row them">
+          <div class="kk-avatar teacher">J</div>
+          <div class="kk-bubble">잘 하고 있어요 💪 다음 주도 화이팅!</div>
+          <div class="kk-time">일요일 오후 8:06</div>
+        </div>
+      </div>
+      <div class="kakao-caption">매주 정기 학습 리포트와 피드백을 드립니다</div>
+    </div>
+  </div>
+
+  </div><!-- /kakao -->
+  <div class="review-section" data-section="text">
+  <!-- ── 6. 텍스트 후기 ── -->
+  <div class="sec-label reveal">
+    <div class="sec-label-icon"><i class="fas fa-star"></i></div>
+    <div class="sec-label-text">
+      <h2>수강생 후기</h2>
+      <p>수강생이 남긴 솔직한 리뷰입니다</p>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="r-grade"><i class="fas fa-arrow-up"></i> 2등급 → 1등급</div>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">개념을 정확히 잡아주셔서 수학이 확실히 쉬워졌어요. 막막하게만 느껴졌던 수학이 이제는 풀어나갈 수 있는 과목으로 바뀌었습니다.</p>
+      <div class="r-author">
+        <div class="r-avatar"><i class="fas fa-user"></i></div>
+        <div>
+          <div class="r-author-name">○○○ 학생</div>
+          <div class="r-author-meta">고3 · 2등급 → 1등급</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="r-grade"><i class="fas fa-arrow-up"></i> 3등급 → 1등급</div>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">모의고사 성적이 3등급에서 1등급으로 올랐어요! 꼼꼼한 진단 덕분에 제가 어디서 틀리는지 명확히 알게 됐습니다.</p>
+      <div class="r-author">
+        <div class="r-avatar"><i class="fas fa-user"></i></div>
+        <div>
+          <div class="r-author-name">○○○ 학생</div>
+          <div class="r-author-meta">재수생 · 3등급 → 1등급</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="r-grade"><i class="fas fa-arrow-up"></i> 4등급 → 2등급</div>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">매주 받는 피드백 덕분에 공부 방향이 완전히 바뀌었어요. 혼자 할 때랑 비교가 안 되게 효율적입니다.</p>
+      <div class="r-author">
+        <div class="r-avatar"><i class="fas fa-user"></i></div>
+        <div>
+          <div class="r-author-name">○○○ 학생</div>
+          <div class="r-author-meta">고2 · 4등급 → 2등급</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /text -->
+
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="page-footer-logo">J-MATH</div>
+  <div class="page-footer-copy">© 2026 J-MATH. All rights reserved.</div>
+</footer>
+
+<script>
+  // ── 필터 탭 ──
+  const tabs = document.querySelectorAll('.filter-tab');
+  const sections = document.querySelectorAll('.review-section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const filter = this.dataset.filter;
+
+      // 탭 활성화
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+
+      // 섹션 표시/숨김
+      sections.forEach(sec => {
+        if (filter === 'all' || sec.dataset.section === filter) {
+          sec.classList.remove('hidden');
+          // 새로 보이는 카드에 reveal 재실행
+          sec.querySelectorAll('.reveal:not(.visible)').forEach((el, i) => {
+            setTimeout(() => el.classList.add('visible'), i * 70);
+          });
+        } else {
+          sec.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // ── 스크롤 reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.dataset.delay = (i % 3) * 80;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

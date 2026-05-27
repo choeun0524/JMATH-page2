@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J-MATH — 프리미엄 수학 전략 코칭</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --navy:        #0B2D5C;
+      --navy-deep:   #061A36;
+      --navy-mid:    #0e3369;
+      --gold:        #C9A23A;
+      --gold-light:  #E6C66A;
+      --gold-pale:   rgba(201,162,58,.12);
+      --white:       #FFFFFF;
+      --bg-blue:     #F5F7FB;
+      --bg-cream:    #FBF8EF;
+      --text:        #182033;
+      --text-sub:    #667085;
+      --border:      rgba(11,45,92,.10);
+      --border-gold: rgba(201,162,58,.30);
+      --shadow-sm:   0 2px 12px rgba(11,45,92,.08);
+      --shadow-md:   0 8px 32px rgba(11,45,92,.12);
+      --shadow-lg:   0 20px 60px rgba(11,45,92,.16);
+      --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Noto Sans KR',sans-serif; color:var(--text); background:var(--white); overflow-x:hidden; line-height:1.6; word-break:keep-all; overflow-wrap:break-word; }
+    a { text-decoration:none; color:inherit; }
+    button { font-family:inherit; cursor:pointer; border:none; }
+    ul { list-style:none; }
+
+    /* ── NAV ── */
+    .nav {
+      position:sticky; top:0; z-index:1000;
+      height:70px;
+      background:rgba(6,26,54,.97);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(201,162,58,.15);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 7%;
+    }
+    .nav-logo { display:flex; flex-direction:column; gap:1px; }
+    .nav-logo-main { font-size:20px; font-weight:900; color:var(--gold-light); letter-spacing:-.5px; }
+    .nav-logo-sub { font-size:10px; color:rgba(255,255,255,.3); letter-spacing:.3px; }
+    .nav-links { display:flex; gap:36px; }
+    .nav-links a { font-size:13.5px; font-weight:500; color:rgba(255,255,255,.55); transition:color .2s; }
+    .nav-links a:hover { color:var(--gold-light); }
+    .btn-nav {
+      height:38px; padding:0 22px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:var(--navy-deep); font-size:13.5px; font-weight:800;
+      border-radius:var(--r-sm); letter-spacing:.2px;
+      box-shadow:0 2px 12px rgba(201,162,58,.35);
+      transition:all .2s;
+    }
+    .btn-nav:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(201,162,58,.45); }
+
+    /* ── HERO ── */
+    .hero {
+      background:var(--navy-deep);
+      min-height:640px;
+      padding:72px 7% 72px;
+      display:flex;
+      align-items:center;
+      gap:48px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(
+        -48deg, transparent 0, transparent 80px,
+        rgba(201,162,58,.025) 80px, rgba(201,162,58,.025) 81px
+      );
+    }
+    .hero::after {
+      content:''; position:absolute;
+      top:-100px; right:-60px;
+      width:560px; height:560px;
+      background:radial-gradient(circle,rgba(201,162,58,.09) 0%,transparent 65%);
+      pointer-events:none;
+    }
+
+    /* hero left */
+    .hero-left { flex:1; position:relative; z-index:2; }
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(201,162,58,.12);
+      border:1px solid rgba(201,162,58,.38);
+      color:var(--gold-light);
+      font-size:12px; font-weight:600;
+      padding:6px 14px; border-radius:30px;
+      letter-spacing:.5px; margin-bottom:24px;
+    }
+    .hero-eyebrow i { font-size:10px; }
+    .hero-h1 {
+      font-size:64px; font-weight:900;
+      color:var(--gold-light);
+      line-height:1; letter-spacing:-3px;
+      margin-bottom:14px;
+    }
+    .hero-h2 {
+      font-size:26px; font-weight:700;
+      color:rgba(255,255,255,.9);
+      line-height:1.45; letter-spacing:-.5px;
+      margin-bottom:22px;
+    }
+    .hero-desc {
+      font-size:14px; color:rgba(255,255,255,.42);
+      line-height:2; margin-bottom:36px; max-width:440px;
+    }
+    .hero-desc strong { color:rgba(255,255,255,.68); font-weight:600; }
+    .btn-hero {
+      display:inline-flex; align-items:center; gap:12px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:var(--navy-deep);
+      font-size:15.5px; font-weight:900;
+      padding:18px 38px; border-radius:var(--r-md);
+      box-shadow:0 6px 24px rgba(201,162,58,.2);
+      transition:all .25s; letter-spacing:.2px;
+    }
+    .btn-hero:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(201,162,58,.28); }
+    .btn-hero i { font-size:13px; }
+
+    /* ── 리본 배너 ── */
+    .ticket-btn-wrap { display:inline-block; }
+    .ticket-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100px;
+      height: 380px;
+      padding: 36px 10px 90px;
+      cursor: pointer;
+      font-family: inherit;
+      position: relative;
+      border: none;
+      background: transparent;
+      transition: filter .3s ease, transform .3s ease;
+    }
+    /* 리본 본체 */
+    .ticket-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, var(--gold) 0%, var(--gold-light) 40%, var(--gold) 100%);
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 78%, 0% 100%);
+    }
+    /* shimmer */
+    .ticket-btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+      background-size: 220% 100%;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 78%, 0% 100%);
+      animation: ribbon-shimmer 2.6s ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes ribbon-shimmer {
+      0%   { background-position: -120% center; }
+      65%  { background-position: 220% center; }
+      100% { background-position: 220% center; }
+    }
+    .ticket-btn:hover { filter: brightness(1.1); transform: translateY(-4px); }
+    .ticket-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:22px; width:100%; }
+    .ticket-stub { display:flex; flex-direction:column; align-items:center; gap:4px; }
+    .ticket-stub-icon { font-size:15px; color:var(--navy-deep); opacity:.8; }
+    .ticket-stub-text { font-size:8px; font-weight:900; color:var(--navy-deep); letter-spacing:1.2px; text-transform:uppercase; text-align:center; opacity:.75; line-height:1.4; }
+    .ticket-divider { width:28px; height:1px; background:rgba(6,26,54,.3); }
+    .ticket-main { display:flex; flex-direction:column; align-items:center; gap:3px; text-align:center; }
+    .ticket-label { font-size:9px; font-weight:700; color:rgba(6,26,54,.6); letter-spacing:.5px; text-transform:uppercase; line-height:1.4; }
+    .ticket-title { font-size:15px; font-weight:900; color:var(--navy-deep); letter-spacing:-.4px; line-height:1.3; }
+    .ticket-know { font-size:10px; font-weight:300; color:rgba(6,26,54,.65); letter-spacing:.3px; margin-top:6px; }
+    .ticket-sub { font-size:9px; color:rgba(6,26,54,.45); margin-top:3px; }
+    .ticket-arrow { font-size:8px; color:var(--navy-deep); opacity:.5; }
+
+    /* badges */
+    .hero-badges {
+      display:flex; gap:12px;
+      margin-top:48px; padding-top:34px;
+      border-top:1px solid rgba(255,255,255,.07);
+    }
+    .badge {
+      display:flex; align-items:center; gap:13px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(201,162,58,.2);
+      border-radius:var(--r-md);
+      padding:14px 18px;
+      backdrop-filter:blur(10px);
+      transition:all .25s;
+    }
+    .badge:hover { background:rgba(201,162,58,.08); border-color:rgba(201,162,58,.42); transform:translateY(-2px); }
+    .badge-icon {
+      width:40px; height:40px;
+      background:rgba(201,162,58,.14);
+      border-radius:var(--r-sm);
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0;
+    }
+    .badge-icon i { font-size:17px; color:var(--gold-light); }
+    .badge-body { display:flex; flex-direction:column; gap:3px; }
+    .badge-lbl  { font-size:10.5px; color:rgba(255,255,255,.7); font-weight:700; line-height:1.3; letter-spacing:.2px; }
+    .badge-val  { font-size:17px; font-weight:900; color:#fff; line-height:1.15; letter-spacing:-.3px; }
+    .badge-date { font-size:10px; color:rgba(255,255,255,.28); margin-top:1px; line-height:1.3; }
+
+    /* 히어로 가운데 티켓 */
+    .hero-ticket-float {
+      position: absolute;
+      left: 93%;
+      top: 20px;
+      transform: translateX(-50%);
+      z-index: 3;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,.45));
+      transition: filter .3s ease;
+    }
+
+    /* ── HERO RIGHT: photo + creds ── */
+    .hero-right {
+      flex:0 0 380px;
+      position:relative;
+      align-self:stretch;
+      z-index:2;
+      overflow:visible;
+    }
+    /* 사진 영역 */
+    .hero-photo {
+      position:absolute;
+      top:-20px; right:0;
+      width:100%; height:100%;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .hero-photo img {
+      height:82%;
+      width:auto;
+      max-width:none;
+      object-fit:contain;
+      object-position:bottom center;
+      display:block;
+      margin-bottom:auto;
+      /* 하단 페이드 */
+      -webkit-mask-image:linear-gradient(to top, transparent 0%, black 14%);
+      mask-image:linear-gradient(to top, transparent 0%, black 14%);
+      filter:drop-shadow(-8px 0 32px rgba(0,0,0,.5));
+    }
+    /* 경력 텍스트 — 하단 고정 */
+    .hero-creds {
+      position:absolute;
+      bottom:4px; left:0; right:0;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:0;
+      padding:0 12px;
+      z-index:3;
+      text-align:right;
+    }
+    .hc-name {
+      font-size:26px; font-weight:900;
+      color:#fff; letter-spacing:-.8px;
+      line-height:1.1; margin-bottom:4px;
+      text-shadow:0 2px 16px rgba(0,0,0,.6);
+    }
+    .hc-role {
+      font-size:12px; font-weight:600;
+      color:var(--gold-light); letter-spacing:.4px;
+      margin-bottom:14px;
+      text-shadow:0 1px 8px rgba(0,0,0,.5);
+    }
+    .hc-divider {
+      width:28px; height:1.5px;
+      background:var(--gold); opacity:.6;
+      margin-bottom:14px;
+      align-self:flex-end;
+    }
+    .hc-list { display:flex; flex-direction:column; gap:9px; }
+    .hc-item {
+      display:flex; align-items:flex-start;
+      flex-direction:row-reverse; gap:7px;
+      font-size:11.5px; color:rgba(255,255,255,.48);
+      line-height:1.5;
+    }
+    .hc-item::before {
+      content:'';
+      width:4px; height:4px;
+      background:var(--gold); border-radius:50%;
+      flex-shrink:0; margin-top:5px;
+    }
+    .hc-item strong { color:rgba(255,255,255,.78); font-weight:700; }
+
+    /* ── SECTION BASE ── */
+    .sec { padding:96px 7%; }
+    .sec-inner { max-width:1100px; margin:0 auto; }
+    .sec-head { text-align:center; margin-bottom:60px; }
+    .sec-kicker {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:11.5px; font-weight:700;
+      color:var(--gold); letter-spacing:1.5px;
+      text-transform:uppercase; margin-bottom:12px;
+    }
+    .sec-kicker::before, .sec-kicker::after {
+      content:''; display:block;
+      width:22px; height:1.5px;
+      background:var(--gold); opacity:.6;
+    }
+    .sec-title {
+      font-size:34px; font-weight:900;
+      color:var(--navy); letter-spacing:-1px; line-height:1.25;
+    }
+    .sec-title em { font-style:normal; color:var(--gold); }
+    .sec-subtitle { font-size:15px; color:var(--text-sub); margin-top:12px; line-height:1.8; }
+    .sec-dark .sec-title { color:#fff; }
+    .sec-dark .sec-kicker { color:var(--gold-light); }
+    .sec-dark .sec-kicker::before, .sec-dark .sec-kicker::after { background:var(--gold-light); }
+    .sec-dark .sec-subtitle { color:rgba(255,255,255,.4); }
+
+    /* ── PROBLEMS ── */
+    .sec-problems { background:var(--bg-blue); }
+    .problems-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+    .prob-card {
+      border:1.5px solid var(--border); border-radius:var(--r-md);
+      padding:28px 18px 26px; text-align:center;
+      background:var(--white); transition:all .3s;
+      position:relative; overflow:hidden;
+    }
+    .prob-card::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,var(--gold),var(--gold-light));
+      transform:scaleX(0); transition:transform .3s; transform-origin:left;
+    }
+    .prob-card:hover { border-color:var(--border-gold); box-shadow:var(--shadow-md); transform:translateY(-6px); }
+    .prob-card:hover::after { transform:scaleX(1); }
+    .prob-icon {
+      width:60px; height:60px;
+      background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 18px;
+      box-shadow:0 4px 14px rgba(11,45,92,.2);
+    }
+    .prob-icon i { font-size:20px; color:var(--gold-light); }
+    .prob-text { font-size:13.5px; color:var(--text-sub); line-height:1.7; font-weight:500; }
+
+    /* ── TEACHER ── */
+    .sec-teacher { background:var(--bg-blue); }
+    .teacher-inner { display:grid; grid-template-columns:380px 1fr; gap:70px; align-items:center; }
+    .teacher-photo-box {
+      height:460px;
+      background:linear-gradient(160deg,#0e3369 0%,var(--navy-deep) 100%);
+      border-radius:var(--r-xl);
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+      box-shadow:var(--shadow-lg);
+      border:1px solid rgba(201,162,58,.12);
+    }
+    .teacher-photo-box::before {
+      content:'\f508'; font-family:'Font Awesome 6 Free'; font-weight:900;
+      font-size:180px; color:rgba(201,162,58,.1);
+      position:absolute; top:40px; left:50%; transform:translateX(-50%);
+    }
+    .teacher-photo-box .accent-line {
+      position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,var(--gold),var(--gold-light));
+    }
+    .t-eyebrow {
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:11.5px; font-weight:700;
+      color:var(--gold); letter-spacing:.8px; text-transform:uppercase;
+      margin-bottom:14px;
+    }
+    .t-eyebrow::before { content:''; width:20px; height:1.5px; background:var(--gold); }
+    .t-name { font-size:42px; font-weight:900; color:var(--navy); letter-spacing:-1.5px; margin-bottom:6px; }
+    .t-role-badge {
+      display:inline-block;
+      background:var(--gold-pale); border:1px solid var(--border-gold);
+      color:var(--gold); font-size:12px; font-weight:700;
+      padding:4px 12px; border-radius:30px; margin-bottom:28px;
+    }
+    .t-creds { display:flex; flex-direction:column; gap:14px; }
+    .t-cred-item { display:flex; align-items:flex-start; gap:12px; font-size:14.5px; color:var(--text); line-height:1.55; }
+    .t-cred-icon {
+      width:22px; height:22px;
+      background:var(--gold-pale); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; margin-top:1px;
+    }
+    .t-cred-icon i { font-size:10px; color:var(--gold); }
+
+
+    /* ── 매일 관리 시스템 ── */
+    .sec-mgmt {
+      background: var(--navy-deep);
+      padding: 100px 7%;
+      position: relative;
+      overflow: hidden;
+    }
+    .sec-mgmt::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(-48deg,transparent 0,transparent 80px,
+        rgba(201,162,58,.02) 80px,rgba(201,162,58,.02) 81px);
+    }
+    .sec-mgmt::after {
+      content:''; position:absolute;
+      bottom:-160px; right:-100px;
+      width:600px; height:600px;
+      background:radial-gradient(circle,rgba(201,162,58,.06) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .mgmt-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+
+    /* 헤더 */
+    .mgmt-header { text-align:center; margin-bottom:64px; }
+    .mgmt-kicker {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:11.5px; font-weight:700; color:var(--gold-light);
+      letter-spacing:1.5px; text-transform:uppercase; margin-bottom:14px;
+    }
+    .mgmt-kicker::before, .mgmt-kicker::after {
+      content:''; width:22px; height:1.5px; background:var(--gold-light); opacity:.5;
+    }
+    .mgmt-title {
+      font-size:38px; font-weight:900; color:#fff;
+      letter-spacing:-1.2px; line-height:1.2; margin-bottom:12px;
+    }
+    .mgmt-title em { font-style:normal; color:var(--gold-light); }
+    .mgmt-desc { font-size:15px; color:rgba(255,255,255,.42); line-height:1.8; }
+
+    /* 루프 비주얼 */
+    .mgmt-loop {
+      display:flex; align-items:center; justify-content:center;
+      gap:0; margin-bottom:64px;
+      position:relative;
+    }
+    /* 전체 연결선 */
+    .mgmt-loop::before {
+      content:''; position:absolute;
+      top:28px; left:calc(5% + 28px); right:calc(5% + 28px);
+      height:1px;
+      background:linear-gradient(90deg,
+        transparent 0%,
+        rgba(201,162,58,.35) 15%,
+        rgba(201,162,58,.35) 85%,
+        transparent 100%
+      );
+    }
+    .loop-item {
+      flex:1; display:flex; flex-direction:column; align-items:center;
+      gap:14px; position:relative; z-index:1; cursor:pointer;
+    }
+    .loop-dot {
+      width:56px; height:56px;
+      background:rgba(255,255,255,.04);
+      border:1.5px solid rgba(201,162,58,.3);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .3s; position:relative;
+    }
+    .loop-item:hover .loop-dot {
+      background:rgba(201,162,58,.12);
+      border-color:var(--gold-light);
+      box-shadow:0 0 0 6px rgba(201,162,58,.08), 0 8px 24px rgba(201,162,58,.2);
+      transform:translateY(-3px);
+    }
+    /* 활성 상태 — 도트는 유지, 태그만 강조 */
+    .loop-item.active .loop-tag {
+      background:rgba(201,162,58,.22);
+      border-color:rgba(201,162,58,.5);
+      color:#fff;
+      font-weight:800;
+    }
+    /* 활성 탭 아래 인디케이터 */
+    .loop-item.active::after {
+      content:'';
+      position:absolute; bottom:-22px; left:50%; transform:translateX(-50%);
+      width:2px; height:16px;
+      background:linear-gradient(180deg,var(--gold),transparent);
+    }
+    .loop-dot i { font-size:20px; color:var(--gold-light); transition:color .2s; }
+    .loop-tag {
+      display:inline-block;
+      background:rgba(201,162,58,.1);
+      border:1px solid rgba(201,162,58,.2);
+      border-radius:30px;
+      padding:3px 12px;
+      font-size:10.5px; font-weight:700; color:var(--gold-light);
+      letter-spacing:.4px; white-space:nowrap;
+      transition:all .2s;
+    }
+    /* 순환 화살표 */
+    .mgmt-cycle {
+      display:flex; align-items:center; justify-content:center;
+      gap:10px; margin-bottom:64px; margin-top:-20px;
+    }
+    .cycle-line {
+      height:1px; flex:1; max-width:160px;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.1));
+    }
+    .cycle-line.right {
+      background:linear-gradient(90deg,rgba(255,255,255,.1),transparent);
+    }
+    .cycle-text {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:11.5px; color:rgba(255,255,255,.28);
+      font-weight:600; letter-spacing:.5px;
+    }
+    .cycle-text i { font-size:11px; color:rgba(201,162,58,.4); }
+
+    /* 5 카드 그리드 */
+    .mgmt-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      grid-template-rows:auto auto;
+      gap:16px;
+    }
+    /* 1번 카드 넓게 */
+    .mgmt-card-wide { grid-column:span 2; }
+
+    .mgmt-card {
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--r-xl);
+      padding:32px 28px;
+      position:relative; overflow:hidden;
+      transition:all .3s;
+    }
+    .mgmt-card::before {
+      content:''; position:absolute;
+      top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--gold),var(--gold-light));
+      transform:scaleX(0); transform-origin:left; transition:transform .35s;
+    }
+    .mgmt-card:hover {
+      background:rgba(201,162,58,.06);
+      border-color:rgba(201,162,58,.22);
+      transform:translateY(-4px);
+      box-shadow:0 16px 40px rgba(0,0,0,.3);
+    }
+    .mgmt-card:hover::before { transform:scaleX(1); }
+    /* 모바일 전용 인터랙션 */
+    @media (max-width:768px) {
+      .mgmt-card.dimmed { display:none; }
+      .mgmt-card.active { transform:translateY(0); }
+      .mgmt-card-wide { grid-column:span 1; }
+      .mgmt-card-wide .mc-detail { grid-template-columns:1fr; }
+    }
+
+    /* 카드 내부 */
+    .mc-header { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+    .mc-icon {
+      width:48px; height:48px; flex-shrink:0;
+      background:rgba(201,162,58,.12);
+      border:1px solid rgba(201,162,58,.2);
+      border-radius:var(--r-md);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .mc-icon i { font-size:20px; color:var(--gold-light); }
+    .mc-title { font-size:17px; font-weight:900; color:#fff; letter-spacing:-.4px; }
+    .mc-badge {
+      margin-left:auto; flex-shrink:0;
+      background:rgba(201,162,58,.1);
+      border:1px solid rgba(201,162,58,.2);
+      border-radius:30px; padding:3px 10px;
+      font-size:10px; font-weight:700; color:var(--gold-light);
+      letter-spacing:.3px;
+    }
+    .mc-desc { font-size:13.5px; color:rgba(255,255,255,.45); line-height:1.8; margin-bottom:18px; }
+    .mc-detail {
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .mc-point {
+      display:flex; align-items:center; gap:8px;
+      font-size:12.5px; color:rgba(255,255,255,.35);
+    }
+    .mc-point::before {
+      content:''; width:4px; height:4px;
+      background:var(--gold); border-radius:50%; flex-shrink:0;
+    }
+    /* wide 카드일 때 디테일 2열로 */
+    .mgmt-card-wide .mc-detail {
+      display:grid; grid-template-columns:1fr 1fr; gap:8px 24px;
+    }
+
+    /* ── PRICING ── */
+    .sec-pricing { background:var(--white); padding:100px 7%; }
+    .pricing-inner { max-width:1100px; margin:0 auto; }
+
+    /* 히어로 프라이스 */
+    .price-hero {
+      text-align:center; margin-bottom:72px;
+    }
+    .price-hero .ph-kicker {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:11.5px; font-weight:700; color:var(--gold);
+      letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;
+    }
+    .price-hero .ph-kicker::before, .price-hero .ph-kicker::after {
+      content:''; width:22px; height:1.5px; background:var(--gold); opacity:.6;
+    }
+    .ph-title {
+      font-size:36px; font-weight:900; color:var(--navy);
+      letter-spacing:-1px; line-height:1.25; margin-bottom:36px;
+    }
+    /* 큰 가격 표시 */
+    .ph-price-wrap {
+      display:inline-flex; align-items:baseline; gap:6px;
+      background:var(--bg-blue);
+      border:1.5px solid var(--border-gold);
+      border-radius:var(--r-xl);
+      padding:28px 48px;
+      position:relative; overflow:hidden;
+      box-shadow:var(--shadow-md);
+    }
+    .ph-price-wrap::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at 50% 0%, rgba(201,162,58,.07) 0%, transparent 65%);
+    }
+    .ph-unit { font-size:22px; font-weight:800; color:var(--text-sub); }
+    .ph-amount {
+      font-size:72px; font-weight:900;
+      color:var(--gold);
+      letter-spacing:-3px; line-height:1;
+      text-shadow:0 2px 24px rgba(201,162,58,.25);
+    }
+    .ph-won { font-size:32px; font-weight:900; color:var(--gold); letter-spacing:-1px; }
+    .ph-sub {
+      font-size:14px; color:var(--text-sub); margin-top:14px; line-height:1.8;
+    }
+    .ph-badge {
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(201,162,58,.1); border:1px solid var(--border-gold);
+      color:var(--gold); font-size:12px; font-weight:700;
+      padding:5px 14px; border-radius:30px; margin-top:12px;
+    }
+    .ph-badge i { font-size:11px; }
+
+    /* 비교 테이블 */
+    .compare-wrap { margin-bottom:64px; }
+    .compare-label {
+      text-align:center; font-size:13px; font-weight:700;
+      color:var(--text-sub); letter-spacing:.5px; text-transform:uppercase;
+      margin-bottom:20px;
+    }
+    .compare-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+    }
+    .compare-card {
+      border-radius:var(--r-lg); padding:28px 24px;
+      border:1.5px solid var(--border);
+      background:var(--bg-blue);
+      transition:all .3s;
+    }
+    .compare-card.highlight {
+      background:var(--navy);
+      border-color:var(--gold);
+      box-shadow:0 0 0 4px rgba(201,162,58,.12), var(--shadow-lg);
+      transform:translateY(-6px);
+      position:relative;
+    }
+    .compare-card.highlight::before {
+      content:'추천'; position:absolute;
+      top:-14px; left:50%; transform:translateX(-50%);
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:var(--navy-deep); font-size:11px; font-weight:900;
+      padding:4px 16px; border-radius:30px;
+      letter-spacing:.5px;
+    }
+    .cc-label { font-size:12px; font-weight:700; color:var(--text-sub); letter-spacing:.5px; margin-bottom:12px; }
+    .compare-card.highlight .cc-label { color:rgba(255,255,255,.5); }
+    .cc-price {
+      font-size:34px; font-weight:900; color:var(--navy);
+      letter-spacing:-1.5px; line-height:1; margin-bottom:4px;
+    }
+    .compare-card.highlight .cc-price { color:var(--gold-light); }
+    .cc-price span { font-size:16px; font-weight:700; }
+    .cc-range { font-size:12px; color:var(--text-sub); margin-bottom:20px; }
+    .compare-card.highlight .cc-range { color:rgba(255,255,255,.35); }
+    .cc-rows { display:flex; flex-direction:column; gap:10px; }
+    .cc-row {
+      display:flex; justify-content:space-between; align-items:center;
+      font-size:13px; padding-bottom:10px;
+      border-bottom:1px solid var(--border);
+    }
+    .compare-card.highlight .cc-row { border-bottom-color:rgba(255,255,255,.08); }
+    .cc-row:last-child { border-bottom:none; padding-bottom:0; }
+    .cc-row-label { color:var(--text-sub); font-weight:500; }
+    .compare-card.highlight .cc-row-label { color:rgba(255,255,255,.45); }
+    .cc-row-val { font-weight:700; color:var(--navy); }
+    .compare-card.highlight .cc-row-val { color:#fff; }
+    .cc-row-val.bad { color:#bbb; text-decoration:line-through; font-weight:400; }
+    .cc-row-val.good { color:var(--gold); }
+
+    /* 포함 항목 */
+    .includes-wrap {}
+    .includes-title {
+      font-size:22px; font-weight:900; color:var(--navy);
+      letter-spacing:-.5px; margin-bottom:24px; text-align:center;
+    }
+    .includes-grid {
+      display:grid; grid-template-columns:repeat(2,1fr); gap:12px;
+    }
+    .inc-item {
+      display:flex; align-items:center; gap:12px;
+      padding:16px 20px;
+      background:var(--bg-blue); border-radius:var(--r-md);
+      border:1.5px solid var(--border);
+      transition:all .25s;
+    }
+    .inc-item:hover { border-color:var(--border-gold); background:var(--bg-cream); transform:translateX(4px); }
+    .inc-check {
+      width:28px; height:28px; flex-shrink:0;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .inc-check i { font-size:11px; color:var(--navy-deep); font-weight:900; }
+    .inc-text strong { display:block; font-size:13.5px; font-weight:700; color:var(--navy); }
+    .inc-text span { font-size:12px; color:var(--text-sub); }
+
+    /* PC: 포함 항목 숨김 / 모바일: 비교 테이블 숨김 */
+    @media (min-width:769px) { .includes-wrap { display:none; } }
+    @media (max-width:768px) { .compare-wrap  { display:none; } }
+
+    /* 하단 주석 */
+    .pricing-note {
+      text-align:center; margin-top:40px;
+      font-size:13px; color:var(--text-sub); line-height:1.8;
+    }
+    .pricing-note a { color:var(--gold); font-weight:700; text-decoration:none; border-bottom:1px solid var(--border-gold); }
+
+
+    /* ── REVIEWS ── */
+    .sec-reviews { background:var(--bg-blue); }
+
+    /* 성적 상승 스트립 */
+    .grade-strip {
+      display:flex; gap:12px; flex-wrap:wrap;
+      justify-content:center; margin-bottom:52px;
+    }
+    .gs-card {
+      display:flex; align-items:center; gap:12px;
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--r-md); padding:14px 20px;
+      box-shadow:var(--shadow-sm); transition:all .3s;
+    }
+    .gs-card:hover { border-color:var(--border-gold); box-shadow:var(--shadow-md); transform:translateY(-3px); }
+    .gs-grades {
+      display:flex; align-items:center; gap:8px;
+    }
+    .gs-grade {
+      width:36px; height:36px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:15px; font-weight:900; line-height:1;
+    }
+    .gs-grade.before { background:#eef0f5; color:#aaa; }
+    .gs-grade.after  { background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--navy-deep); }
+    .gs-arrow { font-size:12px; color:var(--gold); }
+    .gs-info { display:flex; flex-direction:column; }
+    .gs-period { font-size:11px; color:var(--text-sub); }
+    .gs-name   { font-size:12.5px; font-weight:700; color:var(--navy); }
+
+    /* 영상 미리보기 스트립 */
+    .video-strip {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:16px; margin-top:36px; margin-bottom:0;
+    }
+    .vs-card {
+      border-radius:var(--r-md); overflow:hidden;
+      border:1.5px solid var(--border); background:var(--white);
+      box-shadow:var(--shadow-sm); transition:all .3s; cursor:pointer;
+    }
+    .vs-card:hover { border-color:var(--border-gold); box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .vs-thumb {
+      height:120px;
+      background:linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      display:flex; align-items:center; justify-content:center;
+      position:relative;
+    }
+    .vs-play {
+      width:40px; height:40px;
+      background:rgba(201,162,58,.9); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .2s;
+    }
+    .vs-card:hover .vs-play { background:var(--gold-light); transform:scale(1.1); }
+    .vs-play i { font-size:14px; color:var(--navy-deep); margin-left:2px; }
+    .vs-dur {
+      position:absolute; bottom:8px; right:10px;
+      background:rgba(0,0,0,.65); color:#fff;
+      font-size:10px; font-weight:600; padding:2px 6px; border-radius:4px;
+    }
+    .vs-info { padding:12px 14px; }
+    .vs-title { font-size:13px; font-weight:700; color:var(--navy); line-height:1.45; margin-bottom:3px; }
+    .vs-meta  { font-size:11px; color:var(--text-sub); }
+
+    .reviews-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:22px; margin-bottom:44px;
+      perspective:1000px;
+    }
+    .review-card {
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--r-lg); padding:30px;
+      position:relative; overflow:hidden;
+      transition:transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease, border-color .2s;
+      transform-style:preserve-3d;
+      will-change:transform;
+    }
+    .review-card::before {
+      content:'\201C'; position:absolute;
+      top:-10px; left:18px;
+      font-size:84px; color:var(--gold); opacity:.1;
+      font-family:Georgia,serif; line-height:1;
+      transition:opacity .3s;
+    }
+    .review-card:hover {
+      border-color:var(--border-gold);
+      transform:translateY(-10px) rotateX(4deg) scale(1.02);
+      box-shadow:
+        0 2px 4px rgba(11,45,92,.06),
+        0 12px 28px rgba(11,45,92,.13),
+        0 24px 48px rgba(11,45,92,.09),
+        0 0 0 1px rgba(201,162,58,.18);
+    }
+    .review-card:hover::before { opacity:.18; }
+    .r-stars { color:#E6A800; font-size:13px; letter-spacing:3px; margin-bottom:14px; }
+    .r-text { font-size:14px; color:var(--text); line-height:1.8; margin-bottom:20px; }
+    .r-author { display:flex; align-items:center; gap:10px; }
+    .r-avatar {
+      width:34px; height:34px;
+      background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .r-avatar i { font-size:14px; color:var(--gold-light); }
+    .r-author-name { font-size:13px; font-weight:700; color:var(--navy); }
+    .r-author-meta { font-size:11px; color:var(--text-sub); }
+    .btn-more {
+      display:inline-flex; align-items:center; gap:8px;
+      border:1.5px solid var(--navy); color:var(--navy);
+      background:transparent; padding:13px 30px;
+      border-radius:var(--r-sm); font-size:14px; font-weight:700;
+      transition:all .2s;
+    }
+    .btn-more:hover { background:var(--navy); color:#fff; }
+
+    .btn-gold {
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:var(--navy-deep); font-size:15px; font-weight:900;
+      padding:16px; border-radius:var(--r-sm); width:100%;
+      box-shadow:0 4px 16px rgba(201,162,58,.3);
+      transition:all .2s; letter-spacing:.2px;
+    }
+    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,162,58,.45); }
+
+    /* ── 상담 신청 ── */
+    .sec-contact {
+      background:var(--navy-deep); padding:100px 7%;
+      position:relative; overflow:hidden;
+    }
+    .sec-contact::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(-48deg, transparent 0, transparent 80px,
+        rgba(201,162,58,.02) 80px, rgba(201,162,58,.02) 81px);
+    }
+    .sec-contact::after {
+      content:''; position:absolute;
+      top:-100px; right:-80px; width:560px; height:560px;
+      background:radial-gradient(circle, rgba(201,162,58,.07) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    .contact-inner {
+      max-width:1100px; margin:0 auto;
+      position:relative; z-index:1;
+    }
+    /* 헤더 */
+    .contact-head { text-align:center; margin-bottom:60px; }
+    .contact-kicker {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:11.5px; font-weight:700; color:var(--gold-light);
+      letter-spacing:1.5px; text-transform:uppercase; margin-bottom:14px;
+    }
+    .contact-kicker::before, .contact-kicker::after {
+      content:''; width:22px; height:1.5px; background:var(--gold-light); opacity:.5;
+    }
+    .contact-title {
+      font-size:38px; font-weight:900; color:#fff;
+      letter-spacing:-1.2px; line-height:1.2; margin-bottom:12px;
+    }
+    .contact-title em { font-style:normal; color:var(--gold-light); }
+    .contact-desc { font-size:15px; color:rgba(255,255,255,.4); line-height:1.8; }
+
+    /* 2열 레이아웃: 채널묶음 + 폼 */
+    .contact-grid {
+      display:grid;
+      grid-template-columns:1.6fr 1fr;
+      gap:64px; align-items:start;
+    }
+    .contact-divider { display:none; }
+    .contact-channels-wrap { display:flex; flex-direction:column; }
+    .contact-channels-row { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+
+    /* 각 채널 */
+    .contact-channel { padding:0 8px; }
+    .ch-icon-wrap {
+      width:64px; height:64px;
+      border-radius:var(--r-lg);
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:20px;
+    }
+    .ch-icon-wrap.kakao { background:#FEE500; }
+    .ch-icon-wrap.phone { background:linear-gradient(135deg,var(--navy-mid),var(--navy)); border:1px solid rgba(201,162,58,.2); }
+    .ch-icon-wrap i { font-size:28px; }
+    .ch-icon-wrap.kakao i { color:#3A1D1D; }
+    .ch-icon-wrap.phone i { color:var(--gold-light); }
+    .ch-label { font-size:11px; font-weight:700; color:rgba(255,255,255,.35); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+    .ch-title { font-size:22px; font-weight:900; color:#fff; letter-spacing:-.5px; margin-bottom:8px; }
+    .ch-desc { font-size:13.5px; color:rgba(255,255,255,.42); line-height:1.8; margin-bottom:24px; }
+    .ch-info {
+      display:flex; flex-direction:column; gap:8px; margin-bottom:28px;
+    }
+    .ch-info-item {
+      display:flex; align-items:center; gap:8px;
+      font-size:13px; color:rgba(255,255,255,.5);
+    }
+    .ch-info-item i { font-size:11px; color:var(--gold); width:14px; }
+    /* 채널 버튼 */
+    .btn-kakao {
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      width:100%; padding:15px;
+      background:#FEE500; color:#3A1D1D;
+      font-size:14.5px; font-weight:900;
+      border-radius:var(--r-md); border:none;
+      font-family:inherit; cursor:pointer;
+      transition:all .2s;
+      box-shadow:0 4px 16px rgba(254,229,0,.25);
+    }
+    .btn-kakao:hover { background:#FFD700; transform:translateY(-2px); box-shadow:0 8px 24px rgba(254,229,0,.35); }
+    .btn-kakao i { font-size:18px; }
+    .btn-phone {
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      width:100%; padding:15px;
+      background:rgba(255,255,255,.06);
+      border:1.5px solid rgba(255,255,255,.15);
+      color:#fff; font-size:14.5px; font-weight:800;
+      border-radius:var(--r-md); font-family:inherit; cursor:pointer;
+      transition:all .2s;
+    }
+    .btn-phone:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); transform:translateY(-2px); }
+    .btn-phone i { font-size:16px; color:var(--gold-light); }
+    .btn-insta {
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      width:100%; padding:15px; margin-top:10px;
+      background:linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      color:#fff; font-size:14.5px; font-weight:800;
+      border-radius:var(--r-md); border:none; font-family:inherit;
+      cursor:pointer; transition:all .2s;
+      box-shadow:0 4px 16px rgba(253,29,29,.25);
+    }
+    .btn-insta:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(253,29,29,.4); opacity:.95; }
+    .btn-insta i { font-size:17px; }
+
+    /* 신청 폼 박스 */
+    .contact-form-box {
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(201,162,58,.22);
+      border-radius:var(--r-xl);
+      padding:36px 32px;
+      box-shadow:0 0 0 1px rgba(255,255,255,.04) inset;
+    }
+    .cfb-title { font-size:18px; font-weight:900; color:#fff; margin-bottom:4px; letter-spacing:-.4px; }
+    .cfb-sub { font-size:13px; color:rgba(255,255,255,.38); margin-bottom:24px; }
+    .cf { margin-bottom:13px; }
+    .cf label { display:block; font-size:12px; font-weight:600; color:rgba(255,255,255,.45); margin-bottom:6px; letter-spacing:.2px; }
+    .cf input, .cf select, .cf textarea {
+      width:100%; padding:12px 15px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:var(--r-sm);
+      color:#fff; font-size:14px;
+      font-family:inherit; outline:none;
+      transition:border-color .2s, background .2s;
+      -webkit-appearance:none;
+    }
+    .cf input:focus, .cf select:focus, .cf textarea:focus {
+      border-color:rgba(201,162,58,.6);
+      background:rgba(201,162,58,.06);
+    }
+    .cf input::placeholder, .cf textarea::placeholder { color:rgba(255,255,255,.2); }
+    .cf select option { background:#0d1e3d; color:#fff; }
+    .cf textarea { resize:none; height:84px; line-height:1.6; }
+    .cf-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .btn-submit {
+      width:100%; padding:16px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:var(--navy-deep); font-size:15px; font-weight:900;
+      border-radius:var(--r-md); border:none; font-family:inherit;
+      cursor:pointer; margin-top:6px;
+      box-shadow:0 4px 16px rgba(201,162,58,.25);
+      transition:all .2s; letter-spacing:.2px;
+    }
+    .btn-submit:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,162,58,.4); }
+    .cf-privacy { font-size:11px; color:rgba(255,255,255,.2); text-align:center; margin-top:12px; }
+
+    /* ── FOOTER ── */
+    .footer { background:#040e1c; padding:44px 7% 28px; border-top:1px solid rgba(201,162,58,.1); }
+    .footer-top {
+      display:flex; align-items:flex-start; justify-content:space-between;
+      padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.05); margin-bottom:24px;
+    }
+    .f-logo-main { font-size:20px; font-weight:900; color:var(--gold-light); letter-spacing:-.4px; }
+    .f-logo-sub { font-size:10px; color:rgba(255,255,255,.2); margin-top:3px; }
+    .f-nav { display:flex; gap:26px; align-items:center; }
+    .f-nav a { font-size:13px; color:rgba(255,255,255,.32); transition:color .2s; }
+    .f-nav a:hover { color:var(--gold-light); }
+    .btn-f {
+      height:36px; padding:0 18px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:var(--navy-deep); font-size:13px; font-weight:800;
+      border-radius:var(--r-sm);
+    }
+    .footer-info { font-size:12px; color:rgba(255,255,255,.18); line-height:2.2; }
+    .footer-info span { margin-right:18px; }
+    .footer-copy { font-size:11px; color:rgba(255,255,255,.1); margin-top:14px; }
+
+    /* scroll top */
+    .scroll-top {
+      position:fixed; bottom:28px; right:28px;
+      width:48px; height:48px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 4px 20px rgba(201,162,58,.45);
+      z-index:999; transition:all .2s;
+    }
+    .scroll-top:hover { transform:translateY(-4px); box-shadow:0 10px 30px rgba(201,162,58,.55); }
+    .scroll-top i { color:var(--navy-deep); font-size:17px; }
+
+    .text-center { text-align:center; }
+    br.m-br { display:none; }
+    @media (max-width:768px) { br.m-br { display:block; } }
+
+    /* 모바일 약술형 논술 티켓 버튼 */
+    .hero-ticket-mobile {
+      display: none;
+      position: relative;
+      margin-top: 16px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    /* 티켓 본체 */
+    .hero-ticket-mobile .htm-body {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(135deg, rgba(201,162,58,.22), rgba(230,198,106,.18));
+      border: 1px solid rgba(201,162,58,.6);
+      border-radius: var(--r-sm);
+      padding: 12px 24px 12px 20px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    /* shimmer */
+    .hero-ticket-mobile .htm-body::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        108deg,
+        transparent 25%,
+        rgba(255,255,255,.45) 50%,
+        transparent 75%
+      );
+      background-size: 220% 100%;
+      animation: m-ticket-shimmer 2.2s ease-in-out infinite;
+    }
+    @keyframes m-ticket-shimmer {
+      0%   { background-position: -120% center; }
+      60%  { background-position: 220% center; }
+      100% { background-position: 220% center; }
+    }
+    /* 좌우 노치 */
+    .hero-ticket-mobile .htm-notch-l,
+    .hero-ticket-mobile .htm-notch-r {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: var(--navy-deep);
+      border-radius: 50%;
+      top: 50%; transform: translateY(-50%);
+      z-index: 2;
+    }
+    .hero-ticket-mobile .htm-notch-l { left: -6px; }
+    .hero-ticket-mobile .htm-notch-r { right: -6px; }
+    /* 점선 구분선 */
+    .hero-ticket-mobile .htm-dash {
+      width: 1px; height: 40px; flex-shrink: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(6,26,54,.4) 0, rgba(6,26,54,.4) 4px,
+        transparent 4px, transparent 8px
+      );
+      position: relative; z-index: 1;
+    }
+    /* 스텁 */
+    .hero-ticket-mobile .htm-stub {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 3px;
+      position: relative; z-index: 1; flex-shrink: 0;
+    }
+    .hero-ticket-mobile .htm-stub i { font-size: 16px; color: var(--gold-light); }
+    .hero-ticket-mobile .htm-stub span {
+      font-size: 8px; font-weight: 900;
+      color: var(--gold); letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    /* 메인 텍스트 */
+    .hero-ticket-mobile .htm-text {
+      display: flex; flex-direction: column; gap: 2px;
+      position: relative; z-index: 1; flex: 1;
+    }
+    .hero-ticket-mobile .htm-label {
+      font-size: 9.5px; font-weight: 700;
+      color: var(--gold); letter-spacing: .5px; text-transform: uppercase;
+    }
+    .hero-ticket-mobile .htm-title {
+      font-size: 16px; font-weight: 900;
+      color: #fff; letter-spacing: -.4px; line-height: 1.2;
+    }
+    .hero-ticket-mobile .htm-sub {
+      font-size: 10.5px; font-weight: 300;
+      color: rgba(255,255,255,.5); margin-top: 2px;
+    }
+    .hero-ticket-mobile .htm-arrow {
+      position: relative; z-index: 1; flex-shrink: 0;
+      font-size: 12px; color: var(--gold-light); margin-left: 8px;
+    }
+
+    /* ── 스크롤 진행바 ── */
+    .scroll-progress {
+      position:fixed; top:0; left:0;
+      height:3px; width:0%;
+      background:linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 60%, #fff8d0 100%);
+      box-shadow:0 0 10px rgba(201,162,58,.7), 0 0 24px rgba(201,162,58,.35);
+      z-index:2001;
+      transition:width .08s linear;
+      border-radius:0 2px 2px 0;
+    }
+
+    /* ── 애니메이션 variants ── */
+    /* 기본: 위로 */
+    .reveal {
+      opacity:0; transform:translateY(32px);
+      transition:opacity .6s cubic-bezier(.22,.61,.36,1), transform .6s cubic-bezier(.22,.61,.36,1);
+    }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* 왼쪽에서 */
+    .reveal-left {
+      opacity:0; transform:translateX(-40px);
+      transition:opacity .65s cubic-bezier(.22,.61,.36,1), transform .65s cubic-bezier(.22,.61,.36,1);
+    }
+    .reveal-left.visible { opacity:1; transform:translateX(0); }
+
+    /* 오른쪽에서 */
+    .reveal-right {
+      opacity:0; transform:translateX(40px);
+      transition:opacity .65s cubic-bezier(.22,.61,.36,1), transform .65s cubic-bezier(.22,.61,.36,1);
+    }
+    .reveal-right.visible { opacity:1; transform:translateX(0); }
+
+    /* 스케일 */
+    .reveal-scale {
+      opacity:0; transform:scale(.94) translateY(20px);
+      transition:opacity .6s cubic-bezier(.22,.61,.36,1), transform .6s cubic-bezier(.22,.61,.36,1);
+    }
+    .reveal-scale.visible { opacity:1; transform:scale(1) translateY(0); }
+
+    /* 페이드만 */
+    .reveal-fade {
+      opacity:0;
+      transition:opacity .7s ease;
+    }
+    .reveal-fade.visible { opacity:1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:1100px) {
+      .problems-grid { grid-template-columns:repeat(3,1fr); }
+    }
+    @media (max-width:900px) {
+      .mgmt-grid { grid-template-columns:1fr; }
+      .mgmt-card-wide { grid-column:span 1; }
+      .mgmt-card-wide .mc-detail { grid-template-columns:1fr; }
+      .mgmt-loop::before { display:none; }
+      .compare-grid { grid-template-columns:1fr; }
+      .compare-card.highlight { transform:none; }
+    }
+    @media (max-width:768px) {
+      .includes-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:900px) {
+      .contact-grid { grid-template-columns:1fr; }
+      .contact-divider { display:none; }
+      .contact-channel { padding:0; margin-bottom:40px; }
+    }
+    @media (max-width:820px) {
+      /* 후기 섹션 모바일 간소화 */
+      .grade-strip {
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+      }
+      .gs-card {
+        width:100%;
+        flex-direction:column;
+        align-items:center;
+        gap:8px;
+        padding:14px 12px;
+        text-align:center;
+      }
+      .gs-info {
+        display:flex; flex-direction:column; align-items:center; gap:2px;
+      }
+      .gs-info .gs-name { font-size:11.5px; }
+      .gs-info .gs-period { font-size:11px; }
+      /* 텍스트 후기: 1개만 표시 */
+      .review-card:nth-child(n+2) { display:none; }
+      .reviews-grid { grid-template-columns:1fr; }
+      /* 영상 미리보기: 첫 번째만 표시 */
+      .video-strip { grid-template-columns:1fr; }
+      .vs-card:nth-child(n+2) { display:none; }
+      .nav-links { display:none; }
+
+      /* 히어로 모바일 */
+      .hero {
+        flex-direction:column;
+        padding:40px 5% 48px;
+        align-items:flex-start;
+        min-height:auto;
+      }
+      .hero-left { padding-right:0; }
+      .hero-h1, .hero-h2 { padding-right:118px; }
+      .hero-h1 { font-size:42px; }
+      .hero-h2 { font-size:20px; }
+
+      /* 프로필 — J-MATH 제목 오른쪽 */
+      .hero-right {
+        display:block !important;
+        position:absolute;
+        top:28px; right:28px;
+        width:152px; height:198px;
+        flex:unset; align-self:unset;
+        overflow:hidden;
+      }
+      .hero-photo {
+        position:static;
+        width:100%; height:100%;
+        -webkit-mask-image:linear-gradient(to top, transparent 0%, black 18%);
+        mask-image:linear-gradient(to top, transparent 0%, black 18%);
+      }
+      .hero-photo img {
+        width:100%; height:100%;
+        object-fit:cover;
+        object-position:top center;
+        filter:drop-shadow(-4px 0 16px rgba(0,0,0,.4));
+      }
+      .hero-creds { display:none; }
+
+      /* 리본 — 절대 위치 숨기고 인라인 버튼으로 대체 */
+      .hero-ticket-float { display:none; }
+      .hero-ticket-mobile { display:flex !important; }
+
+      .hero-badges {
+        flex-direction:column; gap:8px;
+      }
+      .badge { padding:10px 14px; }
+      .badge-val { font-size:15px; }
+      .problems-grid { grid-template-columns:repeat(2,1fr); }
+      .teacher-inner { grid-template-columns:1fr; }
+      .teacher-photo-box { height:280px; }
+      .curr-steps { flex-direction:column; align-items:center; gap:24px; }
+      .curr-connector { display:none; }
+      .reviews-grid { grid-template-columns:1fr; }
+      .form-layout { grid-template-columns:1fr; gap:44px; }
+      .footer-top { flex-direction:column; gap:20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <span class="nav-logo-main">J-MATH</span>
+    <span class="nav-logo-sub">진단 · 맞춤 개념조합 · 피드백</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#curriculum">커리큘럼</a></li>
+    <li><a href="#features">수업 특징</a></li>
+    <li><a href="#reviews">수강 후기</a></li>
+  </ul>
+  <button class="btn-nav">상담 신청</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <i class="fas fa-award"></i>
+      전국 1등 과외 현정호
+    </div>
+    <h1 class="hero-h1">J-MATH</h1>
+    <p class="hero-h2">수학 성적을 관리하는<br>프리미엄 전략 코칭</p>
+    <p class="hero-h2" style="font-size:22px; margin-bottom:28px;">수학 <span style="color:var(--gold-light);">1등급</span>을 만드는 가장 체계적인 방법</p>
+    <p class="hero-desc">
+      <strong>정확한 진단 · 맞춤 개념조합 · 실전 피드백</strong>
+    </p>
+    <a href="#contact" class="btn-hero">
+      무료 학습 진단 신청 <i class="fas fa-arrow-right"></i>
+    </a>
+
+    <!-- 모바일 전용 약술형 논술 티켓 버튼 -->
+    <a href="essay.html" class="hero-ticket-mobile">
+      <div class="htm-body">
+        <div class="htm-notch-l"></div>
+        <div class="htm-notch-r"></div>
+        <div class="htm-stub">
+          <i class="fas fa-award"></i>
+          <span>TICKET</span>
+        </div>
+        <div class="htm-dash"></div>
+        <div class="htm-text">
+          <span class="htm-label">마지막 인서울 티켓</span>
+          <span class="htm-title">약술형 논술</span>
+          <span class="htm-sub">자세히 알아보기</span>
+        </div>
+        <i class="fas fa-chevron-right htm-arrow"></i>
+      </div>
+    </a>
+
+    <!-- 히어로 가운데 티켓 (절대 위치) -->
+    <div class="hero-ticket-float">
+      <div class="ticket-btn-wrap">
+        <button class="ticket-btn" onclick="location.href='essay.html'">
+          <div class="ticket-inner">
+            <div class="ticket-stub">
+              <i class="fas fa-award ticket-stub-icon"></i>
+              <span class="ticket-stub-text">LAST<br>TICKET</span>
+            </div>
+            <div class="ticket-divider"></div>
+            <div class="ticket-main">
+              <span class="ticket-label">마지막<br>인서울<br>티켓</span>
+              <span class="ticket-title">약술형<br>논술</span>
+              <span class="ticket-know">알아보기</span>
+              <span class="ticket-sub"><i class="fas fa-chevron-down ticket-arrow"></i></span>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-badges">
+      <div class="badge">
+        <div class="badge-icon"><i class="fas fa-crown"></i></div>
+        <div class="badge-body">
+          <span class="badge-lbl">김과외 수학</span>
+          <span class="badge-val">랭킹 1위</span>
+          <span class="badge-date">2026년 5월 기준</span>
+        </div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon"><i class="fas fa-users"></i></div>
+        <div class="badge-body">
+          <span class="badge-lbl">누적 수강생</span>
+          <span class="badge-val">5,000명+</span>
+          <span class="badge-date">2026년 5월 기준</span>
+        </div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon"><i class="fas fa-won-sign"></i></div>
+        <div class="badge-body">
+          <span class="badge-lbl">프리미엄 1:1 관리</span>
+          <span class="badge-val">월 39만원</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- photo + creds -->
+  <div class="hero-right">
+    <div class="hero-photo">
+      <img src="teacher.png" alt="현정호 대표강사">
+    </div>
+    <div class="hero-creds">
+      <div class="hc-name">현정호</div>
+      <div class="hc-role">J-MATH 대표강사</div>
+      <div class="hc-divider"></div>
+      <ul class="hc-list">
+        <li class="hc-item">김과외 수학 <strong>&nbsp;랭킹 1위</strong>&nbsp;(2026.05)</li>
+        <li class="hc-item">누적 수강생&nbsp;<strong>5,000명+</strong></li>
+        <li class="hc-item">연세대(신촌)&nbsp;<strong>수학과 학사·석사</strong></li>
+        <li class="hc-item">다년간&nbsp;<strong>1:1 입시 전략</strong>&nbsp;코칭</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="sec sec-problems">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <div class="sec-kicker">학부모 고민</div>
+      <h2 class="sec-title">우리 아이,<br class="m-br"> 이런 고민이 있나요?</h2>
+    </div>
+    <div class="problems-grid">
+      <div class="prob-card reveal">
+        <div class="prob-icon"><i class="fas fa-bullseye"></i></div>
+        <p class="prob-text">개념은 아는데<br>문제만 풀면 틀려요</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-icon"><i class="fas fa-route"></i></div>
+        <p class="prob-text">어디서부터 다시<br>시작해야 할지<br>모르겠어요</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-icon"><i class="fas fa-chart-line"></i></div>
+        <p class="prob-text">실력은 제자리,<br>성적이 오르지<br>않아요</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-icon"><i class="fas fa-hourglass-half"></i></div>
+        <p class="prob-text">시간은 부족한데<br>공부 효율이<br>너무 낮아요</p>
+      </div>
+      <div class="prob-card reveal">
+        <div class="prob-icon"><i class="fas fa-compass"></i></div>
+        <p class="prob-text">혼자 공부해도<br>잘하고 있는지<br>확신이 없어요</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 매일 관리 시스템 -->
+<section id="features" class="sec-mgmt">
+  <div class="mgmt-inner">
+
+    <div class="mgmt-header reveal">
+      <div class="mgmt-kicker">Management System</div>
+      <h2 class="mgmt-title">매일 관리형<br><em>수학 시스템</em></h2>
+      <p class="mgmt-desc">5가지 관리가 매일 동시에 작동합니다. 숙제부터 진도까지, 빠짐없이.</p>
+    </div>
+
+    <!-- 루프 비주얼 -->
+    <div class="mgmt-loop reveal">
+      <div class="loop-item" data-target="card-homework">
+        <div class="loop-dot"><i class="fas fa-check-square"></i></div>
+        <span class="loop-tag">숙제 체크</span>
+      </div>
+      <div class="loop-item" data-target="card-wrong">
+        <div class="loop-dot"><i class="fas fa-times-circle"></i></div>
+        <span class="loop-tag">오답 관리</span>
+      </div>
+      <div class="loop-item" data-target="card-feedback">
+        <div class="loop-dot"><i class="fas fa-comment-dots"></i></div>
+        <span class="loop-tag">질문 피드백</span>
+      </div>
+      <div class="loop-item" data-target="card-routine">
+        <div class="loop-dot"><i class="fas fa-calendar-check"></i></div>
+        <span class="loop-tag">루틴 관리</span>
+      </div>
+      <div class="loop-item" data-target="card-progress">
+        <div class="loop-dot"><i class="fas fa-route"></i></div>
+        <span class="loop-tag">진도 관리</span>
+      </div>
+    </div>
+    <div class="mgmt-cycle reveal">
+      <div class="cycle-line"></div>
+      <span class="cycle-text"><i class="fas fa-sync-alt"></i> 매일 반복 · 지속 순환</span>
+      <div class="cycle-line right"></div>
+    </div>
+
+    <!-- 카드 그리드 -->
+    <div class="mgmt-grid">
+
+      <!-- 와이드: 숙제 체크 -->
+      <div class="mgmt-card mgmt-card-wide reveal-scale" id="card-homework">
+        <div class="mc-header">
+          <div class="mc-icon"><i class="fas fa-check-square"></i></div>
+          <div class="mc-title">매일 숙제 체크</div>
+          <span class="mc-badge">매일</span>
+        </div>
+        <p class="mc-desc">숙제를 냈는지 확인하는 것이 아니라, 어떻게 풀었는지를 확인합니다. 오늘 무엇을 이해했고 무엇이 막혔는지를 파악하는 것이 시작입니다.</p>
+        <div class="mc-detail">
+          <span class="mc-point">당일 풀이 과정 & 접근법 확인</span>
+          <span class="mc-point">막힌 문제 유형 즉시 기록</span>
+          <span class="mc-point">풀이 시간 & 집중도 체크</span>
+          <span class="mc-point">다음날 보완 과제 즉시 설계</span>
+        </div>
+      </div>
+
+      <!-- 오답 관리 -->
+      <div class="mgmt-card reveal-scale" id="card-wrong">
+        <div class="mc-header">
+          <div class="mc-icon"><i class="fas fa-times-circle"></i></div>
+          <div class="mc-title">오답 관리</div>
+          <span class="mc-badge">매일</span>
+        </div>
+        <p class="mc-desc">틀린 문제가 쌓이는 게 아니라 정리됩니다. 오답의 원인을 분류해 같은 실수가 반복되지 않도록 관리합니다.</p>
+        <div class="mc-detail">
+          <span class="mc-point">개념 오류 / 실수 / 풀이 부재로 분류</span>
+          <span class="mc-point">오답 누적 데이터로 패턴 파악</span>
+          <span class="mc-point">주기적 재풀이로 완전 소화</span>
+        </div>
+      </div>
+
+      <!-- 질문 피드백 -->
+      <div class="mgmt-card reveal-scale" id="card-feedback">
+        <div class="mc-header">
+          <div class="mc-icon"><i class="fas fa-comment-dots"></i></div>
+          <div class="mc-title">질문 피드백</div>
+          <span class="mc-badge">수시</span>
+        </div>
+        <p class="mc-desc">모르는 게 생기면 기다리지 않습니다. 수업 외 시간에도 카카오톡으로 즉각 답변. 막히는 순간 바로 풀리는 구조입니다.</p>
+        <div class="mc-detail">
+          <span class="mc-point">당일 즉각 응답 원칙</span>
+          <span class="mc-point">사진 전송으로 풀이 확인</span>
+          <span class="mc-point">자주 묻는 유형 별도 정리</span>
+        </div>
+      </div>
+
+      <!-- 루틴 관리 -->
+      <div class="mgmt-card reveal-scale" id="card-routine">
+        <div class="mc-header">
+          <div class="mc-icon"><i class="fas fa-calendar-check"></i></div>
+          <div class="mc-title">학습 루틴 관리</div>
+          <span class="mc-badge">주간</span>
+        </div>
+        <p class="mc-desc">몇 시간 공부했는지가 아니라, 어떤 루틴으로 공부하는지를 관리합니다. 지속 가능한 루틴이 성적을 만듭니다.</p>
+        <div class="mc-detail">
+          <span class="mc-point">학생 생활 패턴 맞춤 루틴 설계</span>
+          <span class="mc-point">주간 루틴 리뷰 & 조율</span>
+          <span class="mc-point">집중력 분배 구조 코칭</span>
+        </div>
+      </div>
+
+      <!-- 진도 관리 -->
+      <div class="mgmt-card reveal-scale" id="card-progress">
+        <div class="mc-header">
+          <div class="mc-icon"><i class="fas fa-route"></i></div>
+          <div class="mc-title">진도 관리</div>
+          <span class="mc-badge">주간</span>
+        </div>
+        <p class="mc-desc">목표 날짜에서 역산해 오늘의 진도를 설계합니다. 뒤처지면 바로 조정하고, 빠르면 다음 단계를 준비합니다.</p>
+        <div class="mc-detail">
+          <span class="mc-point">수능 / 시험일 역산 로드맵</span>
+          <span class="mc-point">주차별 진도 & 완료율 추적</span>
+          <span class="mc-point">속도 편차 발생 시 즉시 재설계</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="sec sec-reviews">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <div class="sec-kicker">수강생 후기</div>
+      <h2 class="sec-title">직접 경험한 학생들의 <em>이야기</em></h2>
+    </div>
+
+    <!-- 성적 상승 사례 -->
+    <div class="grade-strip">
+      <div class="gs-card reveal">
+        <div class="gs-grades">
+          <div class="gs-grade before">4</div>
+          <i class="fas fa-arrow-right gs-arrow"></i>
+          <div class="gs-grade after">1</div>
+        </div>
+        <div class="gs-info">
+          <span class="gs-name">고3 ○○○ 학생</span>
+          <span class="gs-period">6개월</span>
+        </div>
+      </div>
+      <div class="gs-card reveal">
+        <div class="gs-grades">
+          <div class="gs-grade before">3</div>
+          <i class="fas fa-arrow-right gs-arrow"></i>
+          <div class="gs-grade after">1</div>
+        </div>
+        <div class="gs-info">
+          <span class="gs-name">재수생 ○○○ 학생</span>
+          <span class="gs-period">4개월</span>
+        </div>
+      </div>
+      <div class="gs-card reveal">
+        <div class="gs-grades">
+          <div class="gs-grade before">5</div>
+          <i class="fas fa-arrow-right gs-arrow"></i>
+          <div class="gs-grade after">2</div>
+        </div>
+        <div class="gs-info">
+          <span class="gs-name">고2 ○○○ 학생</span>
+          <span class="gs-period">8개월</span>
+        </div>
+      </div>
+      <div class="gs-card reveal">
+        <div class="gs-grades">
+          <div class="gs-grade before">4</div>
+          <i class="fas fa-arrow-right gs-arrow"></i>
+          <div class="gs-grade after">1</div>
+        </div>
+        <div class="gs-info">
+          <span class="gs-name">고1 ○○○ 학생</span>
+          <span class="gs-period">3개월</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 텍스트 후기 -->
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="r-stars">★★★★★</div>
+        <p class="r-text">개념을 정확히 잡아주셔서 수학이 확실히 쉬워졌어요. 막막하게만 느껴졌던 수학이 이제는 풀어나갈 수 있는 과목으로 바뀌었습니다.</p>
+        <div class="r-author">
+          <div class="r-avatar"><i class="fas fa-user"></i></div>
+          <div>
+            <div class="r-author-name">○○○ 학생</div>
+            <div class="r-author-meta">고3 · 2등급 → 1등급</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="r-stars">★★★★★</div>
+        <p class="r-text">모의고사 성적이 2등급에서 1등급으로 올랐어요! 꼼꼼한 진단 덕분에 제가 어디서 틀리는지 명확히 알게 됐습니다.</p>
+        <div class="r-author">
+          <div class="r-avatar"><i class="fas fa-user"></i></div>
+          <div>
+            <div class="r-author-name">○○○ 학생</div>
+            <div class="r-author-meta">재수생 · 3등급 → 1등급</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <div class="r-stars">★★★★★</div>
+        <p class="r-text">매주 받는 피드백 덕분에 공부 방향이 완전히 바뀌었어요. 혼자 할 때랑 비교가 안 되게 효율적입니다.</p>
+        <div class="r-author">
+          <div class="r-avatar"><i class="fas fa-user"></i></div>
+          <div>
+            <div class="r-author-name">○○○ 학생</div>
+            <div class="r-author-meta">고2 · 4등급 → 2등급</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 영상 인터뷰 미리보기 -->
+    <div class="video-strip reveal">
+      <div class="vs-card">
+        <div class="vs-thumb">
+          <div class="vs-play"><i class="fas fa-play"></i></div>
+          <span class="vs-dur">4:23</span>
+        </div>
+        <div class="vs-info">
+          <div class="vs-title">"6개월 만에 4등급 → 1등급"</div>
+          <div class="vs-meta">고3 ○○○ 학생 인터뷰</div>
+        </div>
+      </div>
+      <div class="vs-card">
+        <div class="vs-thumb">
+          <div class="vs-play"><i class="fas fa-play"></i></div>
+          <span class="vs-dur">3:47</span>
+        </div>
+        <div class="vs-info">
+          <div class="vs-title">"재수 끝에 원하던 대학 합격"</div>
+          <div class="vs-meta">재수생 ○○○ 학생 인터뷰</div>
+        </div>
+      </div>
+      <div class="vs-card">
+        <div class="vs-thumb">
+          <div class="vs-play"><i class="fas fa-play"></i></div>
+          <span class="vs-dur">5:10</span>
+        </div>
+        <div class="vs-info">
+          <div class="vs-title">"수포자였던 제가 수학이 재미있어졌어요"</div>
+          <div class="vs-meta">고2 ○○○ 학생 인터뷰</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top:40px;">
+      <a href="reviews.html" class="btn-more">더 많은 후기 보기 <i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec-pricing">
+  <div class="pricing-inner">
+
+    <div class="price-hero reveal-scale">
+      <div class="ph-kicker">수강 안내</div>
+      <h2 class="ph-title">합리적인 비용으로<br>프리미엄 1:1 관리를</h2>
+      <div class="ph-price-wrap">
+        <span class="ph-unit">월</span>
+        <span class="ph-amount">39</span>
+        <span class="ph-won">만원</span>
+      </div>
+      <p class="ph-sub">5가지 매일 관리 시스템 전부 포함 · 추가 비용 없음</p>
+      <div class="ph-badge"><i class="fas fa-shield-alt"></i> 고액 과외 수준의 관리, 학원보다 합리적인 가격</div>
+    </div>
+
+    <div class="compare-wrap reveal">
+      <div class="compare-label">타 서비스와 비교</div>
+      <div class="compare-grid">
+        <div class="compare-card">
+          <div class="cc-label">대형 학원</div>
+          <div class="cc-price">50<span>만원~</span></div>
+          <div class="cc-range">월 50 – 80만원 내외</div>
+          <div class="cc-rows">
+            <div class="cc-row"><span class="cc-row-label">수업 방식</span><span class="cc-row-val bad">단체 수업</span></div>
+            <div class="cc-row"><span class="cc-row-label">개인 피드백</span><span class="cc-row-val bad">없음</span></div>
+            <div class="cc-row"><span class="cc-row-label">오답 관리</span><span class="cc-row-val bad">없음</span></div>
+            <div class="cc-row"><span class="cc-row-label">진도 관리</span><span class="cc-row-val bad">없음</span></div>
+            <div class="cc-row"><span class="cc-row-label">질문 응답</span><span class="cc-row-val bad">수업 중만</span></div>
+          </div>
+        </div>
+        <div class="compare-card highlight">
+          <div class="cc-label">J-MATH</div>
+          <div class="cc-price">39<span>만원</span></div>
+          <div class="cc-range">월정액 · 추가 비용 없음</div>
+          <div class="cc-rows">
+            <div class="cc-row"><span class="cc-row-label">수업 방식</span><span class="cc-row-val good">1:1 전용</span></div>
+            <div class="cc-row"><span class="cc-row-label">개인 피드백</span><span class="cc-row-val good">매일</span></div>
+            <div class="cc-row"><span class="cc-row-label">오답 관리</span><span class="cc-row-val good">매일</span></div>
+            <div class="cc-row"><span class="cc-row-label">진도 관리</span><span class="cc-row-val good">완전 관리</span></div>
+            <div class="cc-row"><span class="cc-row-label">질문 응답</span><span class="cc-row-val good">수시 즉각</span></div>
+          </div>
+        </div>
+        <div class="compare-card">
+          <div class="cc-label">고액 과외</div>
+          <div class="cc-price">100<span>만원~</span></div>
+          <div class="cc-range">월 100 – 200만원 내외</div>
+          <div class="cc-rows">
+            <div class="cc-row"><span class="cc-row-label">수업 방식</span><span class="cc-row-val">1:1</span></div>
+            <div class="cc-row"><span class="cc-row-label">개인 피드백</span><span class="cc-row-val bad">수업 중만</span></div>
+            <div class="cc-row"><span class="cc-row-label">오답 관리</span><span class="cc-row-val bad">부분적</span></div>
+            <div class="cc-row"><span class="cc-row-label">진도 관리</span><span class="cc-row-val bad">부분적</span></div>
+            <div class="cc-row"><span class="cc-row-label">질문 응답</span><span class="cc-row-val bad">불규칙</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="includes-wrap reveal">
+      <div class="includes-title">월 39만원에 모두 포함</div>
+      <div class="includes-grid">
+        <div class="inc-item"><div class="inc-check"><i class="fas fa-check"></i></div><div class="inc-text"><strong>1:1 맞춤 수업</strong><span>개념 설계부터 실전 훈련까지</span></div></div>
+        <div class="inc-item"><div class="inc-check"><i class="fas fa-check"></i></div><div class="inc-text"><strong>매일 숙제 & 오답 관리</strong><span>당일 풀이 확인 · 오답 누적 관리</span></div></div>
+        <div class="inc-item"><div class="inc-check"><i class="fas fa-check"></i></div><div class="inc-text"><strong>수시 질문 피드백</strong><span>카카오톡 당일 즉각 응답</span></div></div>
+        <div class="inc-item"><div class="inc-check"><i class="fas fa-check"></i></div><div class="inc-text"><strong>루틴 & 진도 관리</strong><span>수능 역산 로드맵 · 주간 리뷰</span></div></div>
+        <div class="inc-item"><div class="inc-check"><i class="fas fa-check"></i></div><div class="inc-text"><strong>주간 학습 리포트</strong><span>성과 · 보완점 · 다음 주 방향 정리</span></div></div>
+      </div>
+    </div>
+
+    <p class="pricing-note reveal">
+      자세한 수업 횟수·구성은 상담 후 조율됩니다.&nbsp;
+      <a href="#contact">무료 상담 신청 →</a>
+    </p>
+
+  </div>
+</section>
+
+<!-- 상담 신청 -->
+<section id="contact" class="sec-contact">
+  <div class="contact-inner">
+
+    <div class="contact-head reveal">
+      <div class="contact-kicker">상담 신청</div>
+      <h2 class="contact-title">지금 바로<br><em>무료 상담</em>을 시작하세요</h2>
+      <p class="contact-desc">편한 방법으로 연락주세요. 빠르게 안내드립니다.</p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- 왼쪽: 카카오 + 전화 + 인스타 -->
+      <div class="contact-channels-wrap">
+        <!-- 채널 행 -->
+        <div class="contact-channels-row">
+          <!-- 카카오톡 -->
+          <div class="contact-channel reveal-left">
+            <div class="ch-icon-wrap kakao">
+              <i class="fas fa-comment"></i>
+            </div>
+            <div class="ch-label">간편 상담</div>
+            <div class="ch-title">카카오톡 상담</div>
+            <p class="ch-desc">채팅으로 편하게 문의하세요.<br>빠르게 답변드립니다.</p>
+            <div class="ch-info">
+              <div class="ch-info-item"><i class="fas fa-clock"></i> 평일 오전 10시 – 오후 10시</div>
+              <div class="ch-info-item"><i class="fas fa-bolt"></i> 보통 1시간 이내 응답</div>
+            </div>
+            <button class="btn-kakao">
+              <i class="fas fa-comment"></i> 카카오톡으로 문의하기
+            </button>
+          </div>
+
+          <!-- 전화 문의 -->
+          <div class="contact-channel reveal-fade">
+            <div class="ch-icon-wrap phone">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="ch-label">전화 문의</div>
+            <div class="ch-title">전화 상담</div>
+            <p class="ch-desc">직접 통화로 궁금한 점을<br>바로 해결하세요.</p>
+            <div class="ch-info">
+              <div class="ch-info-item"><i class="fas fa-clock"></i> 평일 오전 10시 – 오후 9시</div>
+              <div class="ch-info-item"><i class="fas fa-phone"></i> 010-0000-0000</div>
+            </div>
+            <button class="btn-phone">
+              <i class="fas fa-phone"></i> 전화로 문의하기
+            </button>
+          </div>
+        </div>
+
+        <!-- 인스타그램 — 채널 2개 아래 중앙 -->
+        <div style="text-align:center; margin-top:48px;">
+          <a href="https://www.instagram.com/yonsei_hossam/" target="_blank" class="btn-insta" style="display:inline-flex; width:auto; padding:14px 36px;">
+            <i class="fab fa-instagram"></i> 인스타그램 팔로우하기
+          </a>
+          <p style="font-size:11px; color:rgba(255,255,255,.25); margin-top:10px;">@yonsei_hossam</p>
+        </div>
+      </div>
+
+      <!-- 신청 폼 -->
+      <div class="contact-form-box reveal-right">
+        <div class="cfb-title">간편 상담 신청</div>
+        <p class="cfb-sub">남겨주시면 직접 연락드립니다.</p>
+        <div class="cf-row">
+          <div class="cf">
+            <label>학생 이름</label>
+            <input type="text" placeholder="이름">
+          </div>
+          <div class="cf">
+            <label>학년</label>
+            <select>
+              <option value="">선택</option>
+              <option>고1</option>
+              <option>고2</option>
+              <option>고3</option>
+              <option>재수생</option>
+              <option>중3</option>
+            </select>
+          </div>
+        </div>
+        <div class="cf">
+          <label>연락처</label>
+          <input type="tel" placeholder="010-0000-0000">
+        </div>
+        <div class="cf">
+          <label>문의 내용 (선택)</label>
+          <textarea placeholder="궁금한 점이나 현재 상황을 간단히 적어주세요."></textarea>
+        </div>
+        <button class="btn-submit">무료 상담 신청하기 &nbsp;›</button>
+        <p class="cf-privacy">개인정보는 상담 목적 외에 사용되지 않습니다.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="f-logo-main">J-MATH</div>
+      <div class="f-logo-sub">진단 · 맞춤 개념조합 · 피드백</div>
+    </div>
+    <ul class="f-nav">
+      <li><a href="#curriculum">커리큘럼</a></li>
+      <li><a href="#features">수업 특징</a></li>
+      <li><a href="#reviews">수강 후기</a></li>
+        <li><a href="#">상담 신청</a></li>
+    </ul>
+    <button class="btn-f">상담 신청</button>
+  </div>
+  <div class="footer-info">
+    <span>대표강사 현정호</span>
+    <span>사업자등록번호 000-00-00000</span>
+    <span>전화 010-0000-0000</span>
+  </div>
+  <div class="footer-copy">© 2026 J-MATH. All rights reserved.</div>
+</footer>
+
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script>
+  // ── 스크롤 진행바 ──
+  const progressBar = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (scrolled / total * 100) + '%';
+  }, { passive: true });
+
+  // ── 스크롤 reveal (모든 variant) ──
+  const revealSelectors = '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-fade';
+
+  // 그리드 내 자식에 스태거 딜레이 자동 부여
+  const staggerParents = [
+    '.problems-grid', '.reviews-grid', '.grade-strip',
+    '.video-strip', '.mgmt-grid', '.compare-grid',
+    '.includes-grid', '.curr-steps', '.contact-grid'
+  ];
+  staggerParents.forEach(sel => {
+    document.querySelectorAll(sel).forEach(parent => {
+      [...parent.children].forEach((child, i) => {
+        if (!child.dataset.delay) child.dataset.delay = i * 90;
+      });
+    });
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const delay = parseInt(e.target.dataset.delay) || 0;
+        setTimeout(() => e.target.classList.add('visible'), delay);
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll(revealSelectors).forEach(el => revealObserver.observe(el));
+
+  // ── 관리 시스템 루프 인터랙션 (모바일 전용) ──
+  const loopItems = document.querySelectorAll('.loop-item');
+  const mgmtCards = document.querySelectorAll('.mgmt-card');
+  const isMobile = () => window.innerWidth <= 768;
+
+  function activateCard(targetId) {
+    loopItems.forEach(i => i.classList.remove('active'));
+    document.querySelector(`[data-target="${targetId}"]`)?.classList.add('active');
+    mgmtCards.forEach(card => {
+      if (card.id === targetId) {
+        card.classList.remove('dimmed');
+        card.classList.add('active');
+      } else {
+        card.classList.add('dimmed');
+        card.classList.remove('active');
+      }
+    });
+  }
+
+  // 모바일 초기값: 첫 번째 탭 활성
+  if (isMobile()) activateCard('card-homework');
+
+  loopItems.forEach(item => {
+    item.addEventListener('click', function() {
+      if (!isMobile()) return; // PC는 클릭 무반응
+      activateCard(this.dataset.target);
+      // 카드 영역으로 부드럽게 스크롤
+      setTimeout(() => {
+        document.getElementById(this.dataset.target)
+          ?.scrollIntoView({ behavior:'smooth', block:'nearest' });
+      }, 80);
+    });
+  });
+
+
+</script>
+</body>
+</html>
